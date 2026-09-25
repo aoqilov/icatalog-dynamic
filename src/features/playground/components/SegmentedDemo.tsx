@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { GridOneIcon, GridThreeIcon, GridTwoIcon } from '@/shared/ui/Icons'
+import { LuGrid2X2, LuGrid3X3, LuSquare } from 'react-icons/lu'
 import { SegmentedControl } from '@/shared/ui/SegmentedControl'
 import { PlaygroundSection } from './PlaygroundSection'
 
 const gridOptions = [
-  { value: 3, icon: <GridThreeIcon className="size-5" />, ariaLabel: '3 ustun' },
-  { value: 2, icon: <GridTwoIcon className="size-5" />, ariaLabel: '2 ustun' },
-  { value: 1, icon: <GridOneIcon className="size-5" />, ariaLabel: '1 ustun' },
+  { value: 3, icon: <LuGrid3X3 aria-hidden className="size-5" />, ariaLabel: '3 ustun' },
+  { value: 2, icon: <LuGrid2X2 aria-hidden className="size-5" />, ariaLabel: '2 ustun' },
+  { value: 1, icon: <LuSquare aria-hidden className="size-5" />, ariaLabel: '1 ustun' },
 ]
 
 const tabOptions = [

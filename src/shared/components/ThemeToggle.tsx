@@ -1,5 +1,5 @@
 import { useTheme } from '@/hooks/useTheme'
-import { MoonIcon, SunIcon } from '@/shared/ui/Icons'
+import { LuMoon, LuSun } from 'react-icons/lu'
 
 type ThemeToggleProps = {
   className?: string
@@ -17,7 +17,7 @@ export function ThemeToggle({ className = '' }: ThemeToggleProps) {
       aria-label={isDark ? "Yorug' mavzuga o'tish" : "Qorong'i mavzuga o'tish"}
       className={`flex size-11 items-center justify-center rounded-full border border-line text-text transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${className}`}
     >
-      {isDark ? <SunIcon className="size-5" /> : <MoonIcon className="size-5" />}
+      {isDark ? <LuSun aria-hidden className="size-5" /> : <LuMoon aria-hidden className="size-5" />}
     </button>
   )
 }

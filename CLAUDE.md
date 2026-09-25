@@ -4,7 +4,7 @@ Foydalanuvchi bilan o'zbek tilida (lotin yozuvida) yoziladi. Kod, fayl nomlari v
 
 ## Stack
 
-React 19 · TypeScript 6 · Vite 8 · Tailwind CSS 4 · axios · TanStack Query 5 · framer-motion · React Router 7 · oxlint
+React 19 · TypeScript 6 · Vite 8 · Tailwind CSS 4 · axios · TanStack Query 5 · framer-motion · React Router 7 · react-icons · oxlint
 
 ## Buyruqlar
 
@@ -45,8 +45,8 @@ src/
 │           └── products.mockdata.ts   # mock ma'lumotlar
 ├── router/index.tsx               # route'lar ro'yxati
 ├── layouts/
-│   ├── MainLayout.tsx             # Header + sahifa + Footer
-│   └── components/                # Header, MobileMenu, BottomNav, Footer, Logo
+│   ├── MainLayout.tsx             # Header + sahifa + BottomNav
+│   └── components/                # Header, BottomNav, Logo, Footer (hozircha ishlatilmaydi)
 ├── pages/                         # har bir route uchun sahifa
 │   ├── home/HomePage.tsx
 │   └── catalog/
@@ -60,7 +60,7 @@ src/
 │       ├── types.ts               # (kerak bo'lsa) faqat shu feature'ning UI tiplari
 │       └── FeatureProduct.tsx     # yagona kirish nuqtasi
 ├── shared/
-│   ├── ui/                        # oddiy UI elementlar: Icons, Button, Input, Modal
+│   ├── ui/                        # oddiy UI elementlar: Button, Input, Modal
 │   └── components/                # bir nechta feature ishlatadigan komponentlar
 ├── assets/                        # rasm, shrift, ikonkalar
 ├── config/                        # env.ts, routes.ts, navigation.ts, site.ts, niche.ts, konstantalar
@@ -81,16 +81,20 @@ src/
 
 ### Sahifalar
 - Sahifa `pages/<route>/<Nom>Page.tsx` faylida turadi. U faqat Feature komponentlarini yig'adi va URL parametrlarini (`useParams`) props orqali uzatadi. Sahifada API so'rovi va biznes-mantiq bo'lmaydi.
+- Istisno: holati URL query'da turadigan feature (masalan, katalogdagi tanlov va ko'rinish) uni o'zining `hooks/` ichida `useSearchParams` bilan o'qiydi va yozadi (`features/catalog/hooks/useCatalogParams`). Bunday sahifa feature'ga props bermaydi. Boshqa joyda shu formatdagi URL kerak bo'lsa, `ROUTES`ga yordamchi funksiya qo'shiladi (`ROUTES.catalogByCategory`).
 - Yangi sahifa uchun URL `config/routes.ts`dagi `ROUTES`ga, route esa `router/index.tsx`ga qo'shiladi. Kodda URL qo'lda yozilmaydi, faqat `ROUTES` orqali olinadi.
-- Sahifa menyuda ko'rinishi kerak bo'lsa, `config/navigation.ts`dagi `NAV_LINKS`ga `label`, `to` va `icon` bilan qo'shiladi. Header, mobil menyu, pastki navbar va Footer havolalarni shu ro'yxatdan oladi.
+- Sahifa menyuda ko'rinishi kerak bo'lsa, `config/navigation.ts`dagi `NAV_LINKS`ga `label`, `to` va `icon` bilan qo'shiladi. Header (desktop) va pastki navbar havolalarni shu ro'yxatdan oladi.
 
 ### Layout
-- `layouts/MainLayout.tsx` Header, sahifa (`Outlet`) va Footer'ni yig'adi. Ularning qismlari `layouts/components/`da turadi.
+- `layouts/MainLayout.tsx` Header, sahifa (`Outlet`) va BottomNav'ni yig'adi. Ularning qismlari `layouts/components/`da turadi.
 - Sayt nomi, telefon, email va ijtimoiy tarmoqlar faqat `config/site.ts`dagi `SITE`dan olinadi (hozircha vaqtinchalik qiymatlar).
-- Mobil menyu `md` breakpoint'dan kichik ekranlarda ishlaydi. U sahifa o'zgarganda, Escape bosilganda yoki ekran `md`gacha kattalashganda yopiladi va ochiq paytda sahifa scroll'ini bloklaydi (`hooks/useLockBodyScroll`).
+- Header: chapda logo, o'ngda mavzu tugmasi va sevimlilar (❤). Mobilda menyu tugmasi yo'q, navigatsiya faqat BottomNav orqali. `md`dan kattada Header ichida `NAV_LINKS` ko'rinadi.
+- Modal oynalar `shared/ui/BottomSheet` orqali: fon yoki Escape bosilganda yopiladi, ochiq paytda sahifa scroll'i bloklanadi (`hooks/useLockBodyScroll`).
+- Sahifaning o'z sticky toolbar'i bo'lsa, route'ga `handle: { hideHeaderOnMobile: true }` qo'shiladi (tip: `types/router.ts`), `MainLayout` mobilda Header'ni yashiradi. Toolbar mobilda `top-0`, `md`dan kattada Header ostida (`md:top-[65px]`) turadi.
+- Pastda qotib turadigan harakatlar paneli `shared/ui/StickyActionBar` orqali: mobilda BottomNav ustida turadi, sahifa oxiriga uning balandligicha (`h-24`) bo'sh joy qo'yiladi.
 - Mobilda (`md`dan kichik) ekran pastida `BottomNav` turadi: `NAV_LINKS`dagi har bir havola ikonka va nom bilan. Kontent uning ostida qolmasligi uchun `MainLayout`da `pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0` bor, pastki navbar balandligi o'zgarsa, shu ham o'zgartiriladi. Faol band: `aria-current`, qalinroq ikonka va oltin nuqta.
 - `MainLayout` ildizida `.app-bg` turadi: glass sirtlar ortidagi dog'lar har bir sahifada shu yerdan keladi, sahifalarga qayta qo'yilmaydi.
-- Ikonkalar `shared/ui/Icons.tsx`da inline SVG komponent sifatida yoziladi (kutubxonasiz). Yangi ikonka shu faylga qo'shiladi.
+- Ikonkalar `react-icons`dan kerakli faylning o'zida to'g'ridan-to'g'ri import qilinadi (`import { LuHeart } from 'react-icons/lu'`), oraliq `Icons` fayli yo'q. Avval Lucide (`react-icons/lu`), unda yo'q bo'lsa Tabler (`react-icons/tb`) ishlatiladi: ikkalasi chiziqli va `strokeWidth`ni qo'llab-quvvatlaydi. To'ldirilgan (fill) to'plamlar ishlatilmaydi. O'lcham `className` bilan (`size-5`, `size-6`) beriladi, bezak ikonkasiga `aria-hidden` qo'yiladi.
 
 ### Feature'lar
 - Nomlash: `features/<nom>/Feature<Nom>.tsx` (masalan, `features/cart/FeatureCart.tsx`).
@@ -140,13 +144,14 @@ src/
 
 ### Nisha (rang palitrasi)
 - Saytning ranglari `config/niche.ts`dagi `NICHE`dan olinadi. Nishani almashtirish uchun faqat `export const NICHE = NICHES.<id>` qatori o'zgartiriladi.
-- Nisha 6 ta xom rang va `tone` beradi: `brand`, `brandInk`, `textLight`, `textDark`, `blobA`, `blobB`. `tone: 'light'` och brand uchun (oltin, ustida to'q matn), `'dark'` to'q brand uchun (yashil, qizil, ustida och matn): glass-brand zichroq bo'ladi.
+- Nisha 6 ta xom rang, `tone` va `darkTint` beradi: `brand`, `brandInk`, `textLight`, `textDark`, `blobA`, `blobB`. `tone: 'light'` och brand uchun (oltin, ustida to'q matn), `'dark'` to'q brand uchun (yashil, qizil, ustida och matn): glass-brand zichroq bo'ladi.
 - `main.tsx`da render'dan oldin `lib/applyNiche` ranglarni `:root`ga `--brand*` / `--blob-*` sifatida yozadi va `data-niche`, `data-brand-tone` atributlarini qo'yadi.
 - Chiziqlar, glass gradient, soyalar, badge va fon dog'lari `glass.css`da `color-mix()` bilan shu ranglardan hisoblanadi. Mavzuga bog'liq tokenlar (`--primary-text`, `--brand-mark`, `--line`) `textLight` yoki `textDark`ni tanlaydi. Bu qiymatlar qo'lda qayta yozilmaydi.
-- Neytral ranglar (`bg`, `fill`, `tile`, `text`, `muted`) nishaga bog'liq emas, ular `glass.css`da qoladi.
+- Yorug' mavzuda neytral ranglar (`bg`, `fill`, `tile`, `text`, `muted`) nishaga bog'liq emas. Qorong'i mavzuda esa `bg`, `fill`, `tile` va `muted` neytral qoraga nishaning `darkTint` foizicha brand rangini aralashtirib hisoblanadi (`--dark-tint`, 0 bo'lsa sof neytral).
 - Yangi nisha qo'shishda kontrast tekshiriladi: `brandInk` glass-brand ustida va `textLight` / `textDark` fon ustida kamida 4.5:1, ikkala mavzuda.
 - Mobile-first: avval mobil uchun klasslar yoziladi, katta ekranlar uchun `sm:` / `md:` / `lg:` qo'shiladi. Har bir komponent 360px kenglikda ham to'g'ri ko'rinishi shart.
 - Qayta ishlatiladigan framer-motion variantlari `lib/motion.ts`da turadi.
+- `App.tsx`dagi `MotionConfig reducedMotion="user"` OS'dagi "harakatni kamaytirish" sozlamasini hurmat qiladi, har bir animatsiyada alohida tekshirish shart emas. Ichkariga kirish / orqaga qaytish uchun `slideSwitch` (`custom`: 1 yoki -1), bir joyda kontent almashishi uchun `fadeSwap` ishlatiladi.
 
 ### Kod uslubi
 - Faqat named export (`export function HomePage`), default export ishlatilmaydi.

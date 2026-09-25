@@ -16,6 +16,7 @@ export function applyNiche(niche: Niche) {
     '--brand-text-dark': colors.textDark,
     '--blob-a': colors.blobA,
     '--blob-b': colors.blobB,
+    '--dark-tint': `${niche.darkTint}%`,
   }
 
   for (const [name, value] of Object.entries(vars)) {

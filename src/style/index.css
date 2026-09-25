@@ -14,6 +14,8 @@
   --color-brand: var(--brand-mark);
   --color-brand-ink: var(--brand-ink);
   --color-placeholder: var(--image-placeholder);
+  /* rasm yoki to'q qoplama ustidagi aksent: mavzudan qat'i nazar och variant */
+  --color-accent-on-image: var(--brand-text-dark);
 
   --radius-tile: var(--r-tile);
   --radius-sm: var(--r-sm);

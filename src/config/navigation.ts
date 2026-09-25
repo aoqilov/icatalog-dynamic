@@ -1,10 +1,11 @@
-import { CatalogIcon, HangerIcon, HomeIcon, SparkleIcon, UserIcon } from '@/shared/ui/Icons'
+import { LuHouse, LuSearch, LuSparkles, LuUser } from 'react-icons/lu'
+import { TbHanger } from 'react-icons/tb'
 import { ROUTES } from './routes'
 
 export const NAV_LINKS = [
-  { label: 'Bosh sahifa', to: ROUTES.home, icon: HomeIcon },
-  { label: 'Katalog', to: ROUTES.catalog, icon: CatalogIcon },
-  { label: 'Yangi', to: ROUTES.newArrivals, icon: SparkleIcon },
-  { label: 'Garderob', to: ROUTES.wardrobe, icon: HangerIcon },
-  { label: 'Profil', to: ROUTES.profile, icon: UserIcon },
+  { label: 'Bosh sahifa', to: ROUTES.home, icon: LuHouse },
+  { label: 'Katalog', to: ROUTES.catalog, icon: LuSearch },
+  { label: 'Yangi', to: ROUTES.newArrivals, icon: LuSparkles },
+  { label: 'Garderob', to: ROUTES.wardrobe, icon: TbHanger },
+  { label: 'Profil', to: ROUTES.profile, icon: LuUser },
 ]

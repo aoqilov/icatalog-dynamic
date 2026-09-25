@@ -15,6 +15,7 @@
   --brand-text-dark: #D8B238;
   --blob-a: #136207;
   --blob-b: #E89AAE;
+  --dark-tint: 0%;               /* qorong'i fon, kartochka va panellarga qo'shiladigan brand ulushi */
 
   /* brand glass recipe: och brand (oltin) — shaffofroq, to'q matn */
   --brand-lift: 35%;             /* gradient tepasiga qo'shiladigan oq */
@@ -98,11 +99,12 @@
 
 /* ---------- 3. Tokens: dark ---------- */
 :root[data-theme="dark"] {
-  --bg: #131312;
-  --fill: #272725;
-  --tile: #21211F;
+  /* neytral qora + nisha rangidan --dark-tint ulush (0% bo'lsa sof neytral) */
+  --bg: color-mix(in oklab, var(--brand) var(--dark-tint), #131312);
+  --fill: color-mix(in oklab, var(--brand) var(--dark-tint), #272725);
+  --tile: color-mix(in oklab, var(--brand) var(--dark-tint), #21211F);
   --text: #F5F4EE;
-  --muted: #A8A69E;
+  --muted: color-mix(in oklab, var(--brand-text-dark) var(--dark-tint), #A8A69E);
   --primary-text: var(--brand-text-dark);
   --brand-mark: var(--brand-text-dark);
   --line: color-mix(in oklab, var(--brand-text-dark) 30%, transparent);
@@ -112,7 +114,7 @@
   --glass-border: rgba(255, 255, 255, 0.15);
   --glass-highlight: rgba(255, 255, 255, 0.20);
   --glass-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --glass-bar-bg: rgba(19, 19, 18, 0.55);
+  --glass-bar-bg: color-mix(in oklab, var(--bg) 55%, transparent);
 
   --blobs:
     radial-gradient(420px 320px at 10% 16%, color-mix(in oklab, var(--brand) 20%, transparent), transparent 70%),
@@ -124,13 +126,17 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #131312; --fill: #272725; --tile: #21211F; --text: #F5F4EE; --muted: #A8A69E;
+    --bg: color-mix(in oklab, var(--brand) var(--dark-tint), #131312);
+    --fill: color-mix(in oklab, var(--brand) var(--dark-tint), #272725);
+    --tile: color-mix(in oklab, var(--brand) var(--dark-tint), #21211F);
+    --text: #F5F4EE;
+    --muted: color-mix(in oklab, var(--brand-text-dark) var(--dark-tint), #A8A69E);
     --primary-text: var(--brand-text-dark); --brand-mark: var(--brand-text-dark);
     --line: color-mix(in oklab, var(--brand-text-dark) 30%, transparent);
     --line-soft: color-mix(in oklab, var(--brand-text-dark) 12%, transparent);
     --glass-bg: rgba(255,255,255,0.07); --glass-border: rgba(255,255,255,0.15);
     --glass-highlight: rgba(255,255,255,0.20); --glass-shadow: 0 8px 24px rgba(0,0,0,0.35);
-    --glass-bar-bg: rgba(19,19,18,0.55);
+    --glass-bar-bg: color-mix(in oklab, var(--bg) 55%, transparent);
     --blobs:
       radial-gradient(420px 320px at 10% 16%, color-mix(in oklab, var(--brand) 20%, transparent), transparent 70%),
       radial-gradient(380px 300px at 95% 40%, color-mix(in oklab, var(--blob-a) 26%, transparent), transparent 70%),

@@ -23,7 +23,7 @@ export function BottomNav() {
             >
               {({ isActive }) => (
                 <>
-                  <Icon className="size-6.5" strokeWidth={isActive ? 2.3 : 1.6} />
+                  <Icon aria-hidden className="size-6.5" strokeWidth={isActive ? 2.3 : 1.6} />
                   <span className="flex h-1 items-center">
                     {isActive && (
                       <motion.span

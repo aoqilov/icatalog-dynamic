@@ -1,6 +1,6 @@
 // Vaqtinchalik qiymatlar: haqiqiy ma'lumotlar bilan almashtiriladi
 export const SITE = {
-  name: 'Bridal Org',
+  name: 'Icatalog by **',
   description: 'Sayt haqida qisqa tavsif shu yerga yoziladi.',
   phone: {
     label: '+998 00 000 00 00',
