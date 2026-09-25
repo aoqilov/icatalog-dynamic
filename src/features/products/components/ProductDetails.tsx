@@ -8,7 +8,6 @@ export function ProductDetails({ product }: ProductDetailsProps) {
   return (
     <article className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-2">
       <img
-        src={product.image}
         alt={product.name}
         className="w-full rounded-tile object-cover"
       />
