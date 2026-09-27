@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.product(':id'),
         element: <ProductPage />,
-        handle: { hideHeaderOnMobile: true } satisfies RouteHandle,
+        handle: { hideHeaderOnMobile: true, hideBottomNavOnMobile: true } satisfies RouteHandle,
       },
       {
         path: ROUTES.newArrivals,
