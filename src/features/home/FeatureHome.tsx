@@ -21,7 +21,6 @@ export function FeatureHome() {
   const [contactKind, setContactKind] = useState<ContactKind | null>(null)
 
   const closeContacts = useCallback(() => setContactKind(null), [])
-  const openPhones = useCallback(() => setContactKind('phones'), [])
 
   if (store.isPending) return <HomeSkeleton />
 
@@ -48,7 +47,7 @@ export function FeatureHome() {
 
         <div className="gline" />
 
-        <ServicesAccordion services={store.data.services} onMore={openPhones} />
+        <ServicesAccordion services={store.data.services} />
 
         {/* Bo'sh ro'yxat bo'lsa bo'lim umuman chiqmaydi */}
         {news.isPending && <div className="h-80 animate-pulse rounded-md bg-fill" />}

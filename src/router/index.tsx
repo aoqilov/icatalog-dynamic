@@ -31,7 +31,11 @@ export const router = createBrowserRouter([
         handle: { hideHeaderOnMobile: true } satisfies RouteHandle,
       },
       { path: ROUTES.wardrobe, element: <WardrobePage /> },
-      { path: ROUTES.profile, element: <ProfilePage /> },
+      {
+        path: ROUTES.profile,
+        element: <ProfilePage />,
+        handle: { hideHeaderOnMobile: true } satisfies RouteHandle,
+      },
       { path: ROUTES.playground, element: <PlaygroundPage /> },
     ],
   },
