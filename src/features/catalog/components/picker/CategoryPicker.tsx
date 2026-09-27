@@ -4,8 +4,8 @@ import { LuArrowRight } from 'react-icons/lu'
 import type { Category } from '@/api/routes/categories/categories.types'
 import type { ProductFilter } from '@/api/routes/products/products.types'
 import { slideSwitch } from '@/lib/motion'
-import { Button } from '@/shared/ui/Button'
-import { StickyActionBar } from '@/shared/ui/StickyActionBar'
+import { CusButton } from '@/shared/ui/CusButton'
+import { CusStickyActionBar } from '@/shared/ui/CusStickyActionBar'
 import { useGetProductsCount } from '../../api-hooks/useGetProductsCount'
 import { useSelectionDraft } from '../../hooks/useSelectionDraft'
 import type { PickerMode } from '../../types'
@@ -71,7 +71,7 @@ export function CategoryPicker({ categories, initialSelection, onApply }: Catego
       {/* StickyActionBar ostida kontent qolmasligi uchun */}
       <div aria-hidden="true" className="h-24" />
 
-      <StickyActionBar>
+      <CusStickyActionBar>
         {/* glass-bar ichida: blur'siz, chegarali */}
         <button
           type="button"
@@ -81,11 +81,11 @@ export function CategoryPicker({ categories, initialSelection, onApply }: Catego
         >
           Tozalash
         </button>
-        <Button fullWidth onClick={() => onApply(selection.draft)} disabled={count.data === 0}>
-          <span aria-live="polite">Ko'rsatish: {count.data ?? '…'} ta mahsulot</span>
+        <CusButton fullWidth onClick={() => onApply(selection.draft)} disabled={count.data === 0}>
+          <span aria-live="polite">Mahsulot: {count.data ?? '…'}</span>
           <LuArrowRight aria-hidden className="size-5" />
-        </Button>
-      </StickyActionBar>
+        </CusButton>
+      </CusStickyActionBar>
     </>
   )
 }

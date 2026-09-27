@@ -4,7 +4,7 @@ Foydalanuvchi bilan o'zbek tilida (lotin yozuvida) yoziladi. Kod, fayl nomlari v
 
 ## Stack
 
-React 19 · TypeScript 6 · Vite 8 · Tailwind CSS 4 · axios · TanStack Query 5 · framer-motion · React Router 7 · react-icons · oxlint
+React 19 · TypeScript 6 · Vite 8 · Tailwind CSS 4 · axios · TanStack Query 5 · framer-motion · React Router 7 · react-icons · react-zoom-pan-pinch (mahsulot rasmini kattalashtirish) · oxlint
 
 ## Buyruqlar
 
@@ -89,9 +89,9 @@ src/
 - `layouts/MainLayout.tsx` Header, sahifa (`Outlet`) va BottomNav'ni yig'adi. Ularning qismlari `layouts/components/`da turadi.
 - Sayt nomi, telefon, email va ijtimoiy tarmoqlar faqat `config/site.ts`dagi `SITE`dan olinadi (hozircha vaqtinchalik qiymatlar).
 - Header: chapda logo, o'ngda mavzu tugmasi va sevimlilar (❤). Mobilda menyu tugmasi yo'q, navigatsiya faqat BottomNav orqali. `md`dan kattada Header ichida `NAV_LINKS` ko'rinadi.
-- Modal oynalar `shared/ui/BottomSheet` orqali: fon yoki Escape bosilganda yopiladi, ochiq paytda sahifa scroll'i bloklanadi (`hooks/useLockBodyScroll`).
+- Modal oynalar `shared/ui/CusBottomSheet` orqali: fon yoki Escape bosilganda yopiladi, ochiq paytda sahifa scroll'i bloklanadi (`hooks/useLockBodyScroll`).
 - Sahifaning o'z sticky toolbar'i bo'lsa, route'ga `handle: { hideHeaderOnMobile: true }` qo'shiladi (tip: `types/router.ts`), `MainLayout` mobilda Header'ni yashiradi. Toolbar mobilda `top-0`, `md`dan kattada Header ostida (`md:top-[65px]`) turadi.
-- Pastda qotib turadigan harakatlar paneli `shared/ui/StickyActionBar` orqali: mobilda BottomNav ustida turadi, sahifa oxiriga uning balandligicha (`h-24`) bo'sh joy qo'yiladi.
+- Pastda qotib turadigan harakatlar paneli `shared/ui/CusStickyActionBar` orqali: mobilda BottomNav ustida turadi, sahifa oxiriga uning balandligicha (`h-24`) bo'sh joy qo'yiladi.
 - Mobilda (`md`dan kichik) ekran pastida `BottomNav` turadi: `NAV_LINKS`dagi har bir havola ikonka va nom bilan. Kontent uning ostida qolmasligi uchun `MainLayout`da `pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0` bor, pastki navbar balandligi o'zgarsa, shu ham o'zgartiriladi. Faol band: `aria-current`, qalinroq ikonka va oltin nuqta.
 - `MainLayout` ildizida `.app-bg` turadi: glass sirtlar ortidagi dog'lar har bir sahifada shu yerdan keladi, sahifalarga qayta qo'yilmaydi.
 - Ikonkalar `react-icons`dan kerakli faylning o'zida to'g'ridan-to'g'ri import qilinadi (`import { LuHeart } from 'react-icons/lu'`), oraliq `Icons` fayli yo'q. Avval Lucide (`react-icons/lu`), unda yo'q bo'lsa Tabler (`react-icons/tb`) ishlatiladi: ikkalasi chiziqli va `strokeWidth`ni qo'llab-quvvatlaydi. To'ldirilgan (fill) to'plamlar ishlatilmaydi. O'lcham `className` bilan (`size-5`, `size-6`) beriladi, bezak ikonkasiga `aria-hidden` qo'yiladi.
@@ -120,7 +120,7 @@ src/
 
 ### Tiplar va komponentlar
 - Backend tiplari `api/routes/<resurs>/<resurs>.types.ts`da, faqat bitta feature'ga tegishli UI tiplari o'sha feature'ning `types.ts` faylida, boshqa umumiy tiplar `src/types/`da turadi.
-- `shared/ui/`: biznes-mantiqdan xabarsiz oddiy elementlar (Button, Input, Modal).
+- `shared/ui/`: biznes-mantiqdan xabarsiz oddiy elementlar (`CusButton`, `CusInput`, `CusTextarea`, `CusSegment` va h.k.) — nomlanish qoidasi pastda, "Kod uslubi"da.
 - `shared/components/`: bir nechta feature ishlatadigan murakkabroq komponentlar (masalan, ProductCard).
 - Faqat bitta feature'ga kerak komponent `features/<nom>/components/`da turadi.
 
@@ -138,7 +138,7 @@ src/
 - Glass sirtlar faqat recipe klasslari bilan: `.glass` (ikkinchi darajali tugma, trek, chip), `.glass-brand` (asosiy CTA va har qanday tanlangan holat), `.glass-on-image` (surat ustidagi tugma/badge), `.glass-bar` (navbar, sticky panel), `.gline` (ajratuvchi chiziq), `.badge-new` (solid). Ular Tailwind utility'lari bilan qayta yozilmaydi.
 - Bitta ekranda bitta primary (`.glass-brand`) tugma. `.glass-brand` matni faqat `--brand-ink`, boshqa rang berilmaydi.
 - Blur ichida blur bo'lmaydi: `.glass-bar` ichidagi element shaffof + `border-line` bilan yoziladi. Uzun ro'yxat elementlariga `backdrop-filter` qo'yilmaydi, ular `bg-tile` oladi.
-- Tugmalar `shared/ui/Button` (`primary` / `secondary` / `icon` / `onImage`), segmentlar `shared/ui/SegmentedControl` orqali. Faqat ikonkali tugmada `aria-label` shart. Bosiladigan maydon kamida 44×44px.
+- Tugmalar `shared/ui/CusButton` (`primary` / `secondary` / `icon` / `onImage`), segmentlar `shared/ui/CusSegment` orqali. Faqat ikonkali tugmada `aria-label` shart. Bosiladigan maydon kamida 44×44px.
 - Mavzu: `<html data-theme="light|dark">`, tanlov `localStorage`ning `theme` kalitida. O'qish/yozish faqat `hooks/useTheme` orqali, tugma `shared/components/ThemeToggle`. `index.html`dagi inline skript mavzuni React'dan oldin qo'yadi.
 - Yangi dizayn-tizim komponenti avval `/playground` sahifasida (`features/playground`) ko'rsatiladi. Bu route menyuda yo'q.
 
@@ -157,6 +157,7 @@ src/
 - Faqat named export (`export function HomePage`), default export ishlatilmaydi.
 - Komponent fayllari `PascalCase.tsx`, hook'lar `useSomething.ts`, API fayllari `<resurs>.api.ts` / `.types.ts` / `.mockdata.ts`, qolganlari `camelCase.ts`.
 - Props tipi `<Komponent>Props` deb nomlanadi va `type` bilan yoziladi.
+- `shared/ui/`dagi har bir komponent `Cus` prefiksi bilan nomlanadi: `CusButton`, `CusInput`, `CusTextarea`, `CusSegment` va h.k. (fayl nomi ham komponent nomi bilan bir xil, masalan `CusButton.tsx`). Bu faqat `shared/ui/`ga tegishli — `features/`, `layouts/components/`, `shared/components/`dagi komponentlarda prefiks ishlatilmaydi.
 
 ## Yangi feature qo'shish tartibi
 

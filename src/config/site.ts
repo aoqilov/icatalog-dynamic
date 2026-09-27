@@ -1,6 +1,8 @@
 // Vaqtinchalik qiymatlar: haqiqiy ma'lumotlar bilan almashtiriladi
 export const SITE = {
   name: 'Icatalog by **',
+  // Matn ichida ishlatiladigan qisqa nom (masalan, sotuvchiga yoziladigan xabarda)
+  shortName: 'iCatalog',
   description: 'Sayt haqida qisqa tavsif shu yerga yoziladi.',
   phone: {
     label: '+998 00 000 00 00',

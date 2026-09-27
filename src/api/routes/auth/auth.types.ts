@@ -1,0 +1,39 @@
+// api.yaml: customers-auth — login (POST /customers/login), joriy xaridor (GET/PATCH /customers/me),
+// token yangilash (POST /customers/refresh)
+
+export type Gender = 'male' | 'female'
+
+export type LoginRequest = {
+  login: string
+  password: string
+}
+
+export type TokenPair = {
+  accessToken: string
+  refreshToken: string
+}
+
+export type Buyer = {
+  id: number
+  login: string
+  active: boolean
+  firstName: string
+  lastName: string
+  middleName: string
+  age: number | null
+  gender: Gender | null
+  city: string
+  avatarPhoto: string | null
+  createdAt: string // ISO sana-vaqt
+  updatedAt: string // ISO sana-vaqt
+}
+
+export type BuyerUpdateRequest = Partial<{
+  firstName: string
+  lastName: string
+  middleName: string
+  age: number | null
+  gender: Gender | null
+  city: string
+  avatarPhoto: string
+}>

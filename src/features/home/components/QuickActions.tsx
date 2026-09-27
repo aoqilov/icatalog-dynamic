@@ -24,7 +24,7 @@ export function QuickActions({ store, onSelect }: QuickActionsProps) {
     {
       kind: 'phones' as const,
       title: 'Kontaktlar',
-      caption: `${store.phones.length} ta raqam`,
+      caption: `${store.contacts.length} ta raqam`,
       icon: <LuPhone aria-hidden className="size-6" />,
     },
   ]

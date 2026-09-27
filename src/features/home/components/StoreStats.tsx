@@ -1,16 +1,17 @@
 import { Link } from 'react-router'
-import type { StoreStats as StoreStatsData } from '@/api/routes/store/store.types'
+import type { Store } from '@/api/routes/store/store.types'
 import { ROUTES } from '@/config/routes'
 
 type StoreStatsProps = {
-  stats: StoreStatsData
+  store: Pick<Store, 'totalCategories' | 'totalSubcategories' | 'totalProducts'>
 }
 
-export function StoreStats({ stats }: StoreStatsProps) {
+// Hero'da avatar yonidagi tor ustunda turadi (360px ekranda ustun ~70px): yozuv kichik va qisqartiriladi
+export function StoreStats({ store }: StoreStatsProps) {
   const items = [
-    { label: 'kategoriya', value: stats.categories },
-    { label: 'subkategoriya', value: stats.subcategories },
-    { label: 'mahsulot', value: stats.products },
+    { label: 'kategoriya', value: store.totalCategories },
+    { label: 'subkategoriya', value: store.totalSubcategories },
+    { label: 'mahsulot', value: store.totalProducts },
   ]
 
   return (
@@ -19,10 +20,10 @@ export function StoreStats({ stats }: StoreStatsProps) {
         <li key={item.label}>
           <Link
             to={ROUTES.catalog}
-            className="flex min-h-14 flex-col items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-brand"
+            className="flex min-h-12 flex-col items-center justify-center rounded-md px-1 focus-visible:outline-2 focus-visible:outline-brand"
           >
             <span className="text-[17px] font-bold text-text">{item.value}</span>
-            <span className="text-xs text-muted">{item.label}</span>
+            <span className="max-w-full truncate text-[11px] text-muted">{item.label}</span>
           </Link>
         </li>
       ))}

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import type { News } from '@/api/routes/news/news.types'
 import { formatDate } from '@/lib/formatDate'
-import { Carousel } from '@/shared/ui/Carousel'
+import { CusCarousel } from '@/shared/ui/CusCarousel'
 import { PostCard } from './PostCard'
 import { PostSheet } from './PostSheet'
 import { SectionHeader } from './SectionHeader'
@@ -18,16 +18,16 @@ export function NewsSection({ news }: NewsSectionProps) {
     <section aria-labelledby="home-news" className="flex flex-col gap-3">
       <SectionHeader id="home-news" title="Yangiliklar" />
 
-      <Carousel
+      <CusCarousel
         aria-label="Yangiliklar"
         items={news}
         getKey={(item) => item.id}
         renderItem={(item, index) => (
           <PostCard
-            cover={item.cover}
+            cover={null}
             title={item.title}
-            excerpt={item.excerpt}
-            label={formatDate(item.publishedAt)}
+            excerpt={item.description}
+            label={formatDate(item.startsAt)}
             corner={`${index + 1} / ${news.length}`}
             actionLabel="O'qish"
             onOpen={() => setSelected(item)}
@@ -39,9 +39,9 @@ export function NewsSection({ news }: NewsSectionProps) {
         post={
           selected && {
             title: selected.title,
-            meta: formatDate(selected.publishedAt),
-            body: selected.body,
-            cover: selected.cover,
+            meta: formatDate(selected.startsAt),
+            body: selected.description,
+            cover: null,
           }
         }
         onClose={close}

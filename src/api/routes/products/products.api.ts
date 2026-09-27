@@ -13,13 +13,14 @@ export const productsKeys = {
   list: (filter: ProductFilter) => [...productsKeys.all, 'list', filter] as const,
   count: (filter: ProductFilter) => [...productsKeys.all, 'count', filter] as const,
   detail: (id: string) => [...productsKeys.all, id] as const,
+  timeline: () => [...productsKeys.all, 'timeline'] as const,
 }
 
 function matchesFilter(product: Product, filter: ProductFilter) {
   if (filter.categoryIds.length === 0 && filter.subcategoryIds.length === 0) return true
   return (
     filter.categoryIds.includes(product.categoryId) ||
-    filter.subcategoryIds.includes(product.subcategoryId)
+    (product.subcategoryId !== null && filter.subcategoryIds.includes(product.subcategoryId))
   )
 }
 
@@ -59,6 +60,21 @@ export const productsApi = {
       params: { ...toQuery(filter), page, pageSize },
     })
     return data
+  },
+
+  // Barcha mahsulotlar qo'shilgan sanasi bo'yicha, eng yangisi birinchi ("Yangi" bo'limi lentasi va kalendari)
+  getTimeline: async (): Promise<Product[]> => {
+    if (env.useMock) {
+      return [...productsMock].sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    }
+
+    // Taxminiy: tartiblash parametri api.yaml'da yo'q, bitta so'rovda ko'pi bilan 100 ta (backend chegarasi).
+    // Backend ulanganda sahifalab yuklash va kalendar uchun kunlik yig'indi kerak bo'ladi
+    const { data } = await api.post<{ items: Product[] }>('/public/products/get-all/', {
+      page: 1,
+      pageSize: 100,
+    })
+    return data.items
   },
 
   count: async (filter: ProductFilter): Promise<number> => {

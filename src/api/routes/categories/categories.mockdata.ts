@@ -1,3 +1,4 @@
+import { mockImage } from '@/lib/mockImage'
 import type { Category, Subcategory } from './categories.types'
 
 // [id, nom, mahsulot soni]. products.mockdata har bir subkategoriya uchun aynan shuncha mahsulot yaratadi
@@ -8,9 +9,10 @@ const tree: { id: number; name: string; subcategories: SubcategorySeed[] }[] = [
     id: 1,
     name: 'Liboslar',
     subcategories: [
-      [101, 'Nikoh liboslari', 8],
-      [102, 'Yopiq liboslar', 6],
-      [103, 'Kechki liboslar', 5],
+      // 101–103 soniga products.mockdata'dagi 26-sentabrda qo'shilgan 4 ta mahsulot ham kiradi
+      [101, 'Nikoh liboslari', 10],
+      [102, 'Yopiq liboslar', 7],
+      [103, 'Kechki liboslar', 6],
       [104, 'Milliy uslub', 4],
     ],
   },
@@ -47,14 +49,14 @@ export const categoriesMock: Category[] = tree.map((category) => {
     id,
     categoryId: category.id,
     name,
-    image: null,
+    image: mockImage(`subcategory-${id}`, 400, 400),
     productCount,
   }))
 
   return {
     id: category.id,
     name: category.name,
-    image: null,
+    image: mockImage(`category-${category.id}`, 400, 400),
     productCount: subcategories.reduce((sum, item) => sum + item.productCount, 0),
     subcategories,
   }

@@ -66,7 +66,7 @@
   --glass-highlight: rgba(255, 255, 255, 0.90);
   --glass-shadow: 0 8px 24px rgba(60, 48, 12, 0.10);
   --glass-blur: 18px;
-  --glass-bar-bg: rgba(253, 251, 246, 0.55);
+  --glass-bar-bg: rgba(253, 251, 246, 0.85);
   --glass-bar-blur: 22px;
 
   --glass-img-bg: rgba(255, 255, 255, 0.20);
@@ -99,10 +99,10 @@
 
 /* ---------- 3. Tokens: dark ---------- */
 :root[data-theme="dark"] {
-  /* neytral qora + nisha rangidan --dark-tint ulush (0% bo'lsa sof neytral) */
-  --bg: color-mix(in oklab, var(--brand) var(--dark-tint), #131312);
-  --fill: color-mix(in oklab, var(--brand) var(--dark-tint), #272725);
-  --tile: color-mix(in oklab, var(--brand) var(--dark-tint), #21211F);
+  /* neytral sof qora + nisha rangidan --dark-tint ulush (0% bo'lsa sof neytral) */
+  --bg: color-mix(in oklab, var(--brand) var(--dark-tint), #050504);
+  --fill: color-mix(in oklab, var(--brand) var(--dark-tint), #161614);
+  --tile: color-mix(in oklab, var(--brand) var(--dark-tint), #101010);
   --text: #F5F4EE;
   --muted: color-mix(in oklab, var(--brand-text-dark) var(--dark-tint), #A8A69E);
   --primary-text: var(--brand-text-dark);
@@ -110,38 +110,39 @@
   --line: color-mix(in oklab, var(--brand-text-dark) 30%, transparent);
   --line-soft: color-mix(in oklab, var(--brand-text-dark) 12%, transparent);
 
-  --glass-bg: rgba(255, 255, 255, 0.07);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --glass-highlight: rgba(255, 255, 255, 0.20);
-  --glass-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --glass-bar-bg: color-mix(in oklab, var(--bg) 55%, transparent);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-highlight: rgba(255, 255, 255, 0.14);
+  --glass-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --glass-bar-bg: color-mix(in oklab, var(--bg) 94%, transparent);
 
+  /* Bo'sh sahifalarda (masalan Profil) fon dog'lari asosiy manba, shuning uchun juda xira */
   --blobs:
-    radial-gradient(420px 320px at 10% 16%, color-mix(in oklab, var(--brand) 20%, transparent), transparent 70%),
-    radial-gradient(380px 300px at 95% 40%, color-mix(in oklab, var(--blob-a) 26%, transparent), transparent 70%),
-    radial-gradient(420px 340px at 15% 72%, color-mix(in oklab, var(--blob-b) 12%, transparent), transparent 70%),
-    radial-gradient(380px 320px at 90% 94%, color-mix(in oklab, var(--brand) 16%, transparent), transparent 70%);
+    radial-gradient(420px 320px at 10% 16%, color-mix(in oklab, var(--brand) 6%, transparent), transparent 70%),
+    radial-gradient(380px 300px at 95% 40%, color-mix(in oklab, var(--blob-a) 8%, transparent), transparent 70%),
+    radial-gradient(420px 340px at 15% 72%, color-mix(in oklab, var(--blob-b) 4%, transparent), transparent 70%),
+    radial-gradient(380px 320px at 90% 94%, color-mix(in oklab, var(--brand) 5%, transparent), transparent 70%);
 
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: color-mix(in oklab, var(--brand) var(--dark-tint), #131312);
-    --fill: color-mix(in oklab, var(--brand) var(--dark-tint), #272725);
-    --tile: color-mix(in oklab, var(--brand) var(--dark-tint), #21211F);
+    --bg: color-mix(in oklab, var(--brand) var(--dark-tint), #050504);
+    --fill: color-mix(in oklab, var(--brand) var(--dark-tint), #161614);
+    --tile: color-mix(in oklab, var(--brand) var(--dark-tint), #101010);
     --text: #F5F4EE;
     --muted: color-mix(in oklab, var(--brand-text-dark) var(--dark-tint), #A8A69E);
     --primary-text: var(--brand-text-dark); --brand-mark: var(--brand-text-dark);
     --line: color-mix(in oklab, var(--brand-text-dark) 30%, transparent);
     --line-soft: color-mix(in oklab, var(--brand-text-dark) 12%, transparent);
-    --glass-bg: rgba(255,255,255,0.07); --glass-border: rgba(255,255,255,0.15);
-    --glass-highlight: rgba(255,255,255,0.20); --glass-shadow: 0 8px 24px rgba(0,0,0,0.35);
-    --glass-bar-bg: color-mix(in oklab, var(--bg) 55%, transparent);
+    --glass-bg: rgba(255,255,255,0.04); --glass-border: rgba(255,255,255,0.10);
+    --glass-highlight: rgba(255,255,255,0.14); --glass-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    --glass-bar-bg: color-mix(in oklab, var(--bg) 94%, transparent);
     --blobs:
-      radial-gradient(420px 320px at 10% 16%, color-mix(in oklab, var(--brand) 20%, transparent), transparent 70%),
-      radial-gradient(380px 300px at 95% 40%, color-mix(in oklab, var(--blob-a) 26%, transparent), transparent 70%),
-      radial-gradient(420px 340px at 15% 72%, color-mix(in oklab, var(--blob-b) 12%, transparent), transparent 70%),
-      radial-gradient(380px 320px at 90% 94%, color-mix(in oklab, var(--brand) 16%, transparent), transparent 70%);
+      radial-gradient(420px 320px at 10% 16%, color-mix(in oklab, var(--brand) 6%, transparent), transparent 70%),
+      radial-gradient(380px 300px at 95% 40%, color-mix(in oklab, var(--blob-a) 8%, transparent), transparent 70%),
+      radial-gradient(420px 340px at 15% 72%, color-mix(in oklab, var(--blob-b) 4%, transparent), transparent 70%),
+      radial-gradient(380px 320px at 90% 94%, color-mix(in oklab, var(--brand) 5%, transparent), transparent 70%);
     color-scheme: dark;
   }
 }

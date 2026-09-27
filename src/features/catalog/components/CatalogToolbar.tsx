@@ -1,5 +1,9 @@
-import { LuGrid2X2, LuGrid3X3, LuShapes, LuSquare } from 'react-icons/lu'
-import { SegmentedControl } from '@/shared/ui/SegmentedControl'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useState } from 'react'
+import { LuGrid2X2, LuGrid3X3, LuSearch, LuShapes, LuSlidersHorizontal, LuSquare } from 'react-icons/lu'
+import { CusButton } from '@/shared/ui/CusButton'
+import { CusRightSheet } from '@/shared/ui/CusRightSheet'
+import { CusSegment } from '@/shared/ui/CusSegment'
 import type { GridColumns } from '../types'
 
 type CatalogToolbarProps = {
@@ -26,6 +30,9 @@ export function CatalogToolbar({
   columns,
   onColumnsChange,
 }: CatalogToolbarProps) {
+  const [isSearchOpen, setSearchOpen] = useState(false)
+  const [isFilterOpen, setFilterOpen] = useState(false)
+
   return (
     <div className="glass-bar sticky top-0 z-30 md:top-[65px]">
       <div className="mx-auto flex h-14 max-w-2xl items-center gap-2 px-4">
@@ -46,18 +53,67 @@ export function CatalogToolbar({
           )}
         </button>
 
-        {columns && (
-          <SegmentedControl
-            aria-label="Ko'rinish"
-            size="sm"
-            options={COLUMN_OPTIONS}
-            value={columns}
-            onChange={onColumnsChange}
-            className="ml-auto w-fit"
+        {/* Ko'rinish, qidiruv, filtr — har doim o'ng chetda birga turadi */}
+        <div className="ml-auto flex items-center gap-2">
+          {columns && (
+            <CusSegment
+              aria-label="Ko'rinish"
+              size="sm"
+              options={COLUMN_OPTIONS}
+              value={columns}
+              onChange={onColumnsChange}
+              className="w-fit"
+            />
+          )}
+          <CusButton
+            variant="icon"
+            aria-label="Qidiruv"
+            aria-pressed={isSearchOpen}
+            onClick={() => setSearchOpen((open) => !open)}
+            className={isSearchOpen ? 'text-accent' : ''}
+            icon={<LuSearch aria-hidden className="size-4.5" />}
           />
-        )}
+          <CusButton
+            variant="icon"
+            aria-label="Filtr"
+            aria-pressed={isFilterOpen}
+            onClick={() => setFilterOpen(true)}
+            icon={<LuSlidersHorizontal aria-hidden className="size-4.5" />}
+          />
+        </div>
       </div>
+
+      <AnimatePresence initial={false}>
+        {isSearchOpen && (
+          <motion.div
+            key="search"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="overflow-hidden"
+          >
+            <div className="mx-auto flex max-w-2xl items-center gap-2 px-4 pb-3">
+              <div className="flex h-11 flex-1 items-center gap-2 rounded-md border border-line bg-tile px-3">
+                <LuSearch aria-hidden className="size-4.5 shrink-0 text-muted" />
+                <input
+                  type="search"
+                  autoFocus
+                  placeholder="Libos, fata, o'lcham, rang..."
+                  className="min-w-0 flex-1 bg-transparent text-[15px] text-text placeholder:text-muted focus:outline-none"
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="gline" />
+
+      {/* Filtr mazmuni hozircha funksiyasiz — keyinroq narx/rang/brend bo'yicha boshqaruvlar ulanadi */}
+      <CusRightSheet isOpen={isFilterOpen} onClose={() => setFilterOpen(false)} title="Filtr" width="full">
+        <p className="text-sm text-muted">Filtr paneli tez orada.</p>
+      </CusRightSheet>
     </div>
   )
 }

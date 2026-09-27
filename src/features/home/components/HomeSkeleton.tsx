@@ -1,14 +1,20 @@
 // Do'kon ma'lumoti yuklanguncha sahifa shakli (layout sakramasligi uchun o'lchamlar haqiqiy bloklarga teng)
 export function HomeSkeleton() {
   return (
-    <div aria-busy="true" aria-label="Yuklanmoqda" className="flex animate-pulse flex-col items-center">
-      <div className="h-48 w-full bg-fill mask-b-from-50% mask-b-to-100% sm:h-60" />
-      <div className="-mt-14 size-28 rounded-full border-2 border-line bg-fill" />
-      <div className="mt-4 h-6 w-40 rounded-md bg-fill" />
-      <div className="mt-3 h-4 w-28 rounded-md bg-fill" />
+    <div aria-busy="true" aria-label="Yuklanmoqda" className="flex animate-pulse flex-col">
+      <div className="h-56 w-full bg-fill mask-b-from-60% mask-b-to-100% sm:h-64" />
+
+      {/* Avatar va statistika bir qatorda, ostida nom va @instagram (StoreHero bilan bir xil) */}
+      <div className="flex items-end gap-4 px-4">
+        <div className="-mt-12 size-24 shrink-0 rounded-full border-2 border-line bg-fill" />
+        <div className="h-12 flex-1 rounded-md bg-fill" />
+      </div>
+      <div className="flex flex-col gap-3 px-4 pt-3">
+        <div className="h-5 w-32 rounded-md bg-fill" />
+        <div className="h-4 w-24 rounded-md bg-fill" />
+      </div>
 
       <div className="mt-6 flex w-full flex-col gap-5 px-4">
-        <div className="h-14 rounded-md bg-fill" />
         <div className="grid grid-cols-3 gap-2">
           {Array.from({ length: 3 }, (_, index) => (
             <div key={index} className="h-24 rounded-md bg-fill" />

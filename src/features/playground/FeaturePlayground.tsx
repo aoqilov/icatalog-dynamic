@@ -3,6 +3,7 @@ import { ThemeToggle } from '@/shared/components/ThemeToggle'
 import { ButtonsDemo } from './components/ButtonsDemo'
 import { NicheDemo } from './components/NicheDemo'
 import { PlaygroundSection } from './components/PlaygroundSection'
+import { RightSheetDemo } from './components/RightSheetDemo'
 import { SegmentedDemo } from './components/SegmentedDemo'
 
 // Dizayn-tizim komponentlarini haqiqiy ekranlarga qo'yishdan oldin ko'rib chiqish uchun
@@ -25,6 +26,7 @@ export function FeaturePlayground() {
       <NicheDemo />
       <ButtonsDemo />
       <SegmentedDemo />
+      <RightSheetDemo />
 
       <PlaygroundSection title="BottomNav">
         <p className="text-sm text-muted">

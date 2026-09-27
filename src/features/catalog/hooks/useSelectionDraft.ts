@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { Category } from '@/api/routes/categories/categories.types'
 import type { ProductFilter } from '@/api/routes/products/products.types'
-import type { CheckState } from '@/shared/ui/CategoryTile'
+import type { CheckState } from '@/shared/ui/CusCategoryTile'
 
 // Tanlash qoralamasi: "Ko'rsatish" bosilgunicha URL'ga yozilmaydi.
 // Qoida: to'liq tanlangan kategoriya categoryIds'da turadi (uning subkategoriyalari subcategoryIds'da bo'lmaydi),

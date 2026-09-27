@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { LuGrid2X2, LuGrid3X3, LuSquare } from 'react-icons/lu'
-import { SegmentedControl } from '@/shared/ui/SegmentedControl'
+import { CusSegment } from '@/shared/ui/CusSegment'
 import { PlaygroundSection } from './PlaygroundSection'
 
 const gridOptions = [
@@ -28,7 +28,7 @@ export function SegmentedDemo() {
 
   return (
     <PlaygroundSection title="SegmentedControl">
-      <SegmentedControl
+      <CusSegment
         aria-label="Katalog ko'rinishi"
         options={gridOptions}
         value={columns}
@@ -36,8 +36,8 @@ export function SegmentedDemo() {
         size="sm"
         className="w-fit"
       />
-      <SegmentedControl aria-label="Bo'lim" options={tabOptions} value={tab} onChange={setTab} />
-      <SegmentedControl aria-label="Xizmat turi" options={dealOptions} value={deal} onChange={setDeal} />
+      <CusSegment aria-label="Bo'lim" options={tabOptions} value={tab} onChange={setTab} />
+      <CusSegment aria-label="Xizmat turi" options={dealOptions} value={deal} onChange={setDeal} />
     </PlaygroundSection>
   )
 }

@@ -1,4 +1,4 @@
-import { BottomSheet } from '@/shared/ui/BottomSheet'
+import { CusBottomSheet } from '@/shared/ui/CusBottomSheet'
 
 export type PostSheetData = {
   title: string
@@ -15,7 +15,7 @@ type PostSheetProps = {
 // Yangilik yoki aksiyaning to'liq matni
 export function PostSheet({ post, onClose }: PostSheetProps) {
   return (
-    <BottomSheet isOpen={post !== null} onClose={onClose} title={post?.title ?? ''}>
+    <CusBottomSheet isOpen={post !== null} onClose={onClose} title={post?.title ?? ''}>
       {post && (
         <div className="flex flex-col gap-3">
           {post.cover && (
@@ -25,6 +25,6 @@ export function PostSheet({ post, onClose }: PostSheetProps) {
           <p className="text-[15px] leading-relaxed text-text">{post.body}</p>
         </div>
       )}
-    </BottomSheet>
+    </CusBottomSheet>
   )
 }

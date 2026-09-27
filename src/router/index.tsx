@@ -20,8 +20,16 @@ export const router = createBrowserRouter([
         element: <CatalogPage />,
         handle: { hideHeaderOnMobile: true } satisfies RouteHandle,
       },
-      { path: ROUTES.product(':id'), element: <ProductPage /> },
-      { path: ROUTES.newArrivals, element: <NewArrivalsPage /> },
+      {
+        path: ROUTES.product(':id'),
+        element: <ProductPage />,
+        handle: { hideHeaderOnMobile: true } satisfies RouteHandle,
+      },
+      {
+        path: ROUTES.newArrivals,
+        element: <NewArrivalsPage />,
+        handle: { hideHeaderOnMobile: true } satisfies RouteHandle,
+      },
       { path: ROUTES.wardrobe, element: <WardrobePage /> },
       { path: ROUTES.profile, element: <ProfilePage /> },
       { path: ROUTES.playground, element: <PlaygroundPage /> },

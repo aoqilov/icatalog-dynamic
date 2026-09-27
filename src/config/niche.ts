@@ -22,7 +22,7 @@ export const NICHES = {
     id: 'bridal',
     name: 'Kelinlik liboslari',
     tone: 'light',
-    darkTint: 6,
+    darkTint: 3,
     colors: {
       brand: '#D8B238',
       brandInk: '#1F2A1C',
@@ -37,7 +37,7 @@ export const NICHES = {
     id: 'emerald',
     name: 'Hashamatli klassika',
     tone: 'dark',
-    darkTint: 14,
+    darkTint: 4,
     colors: {
       brand: '#006039',
       brandInk: '#F4EBD0',
@@ -52,7 +52,7 @@ export const NICHES = {
     id: 'persian',
     name: 'Sharqona naqsh',
     tone: 'dark',
-    darkTint: 12,
+    darkTint: 3,
     colors: {
       brand: '#9B1B30',
       brandInk: '#F7E9CC',
@@ -67,7 +67,7 @@ export const NICHES = {
     id: 'blue',
     name: 'Sapfir',
     tone: 'dark',
-    darkTint: 14,
+    darkTint: 4,
     colors: {
       brand: '#1F4E9C',
       brandInk: '#F2F5FB',
@@ -82,7 +82,7 @@ export const NICHES = {
     id: 'pink',
     name: 'Atirgul',
     tone: 'dark',
-    darkTint: 12,
+    darkTint: 3,
     colors: {
       brand: '#B3164F',
       brandInk: '#FFF1F5',
@@ -92,7 +92,37 @@ export const NICHES = {
       blobB: '#F6A5C0',
     },
   },
+  // Instagram uslubi: basic qora-oq-kulrang, aksent rangsiz
+  instagram: {
+    id: 'instagram',
+    name: 'Instagram',
+    tone: 'dark',
+    darkTint: 0,
+    colors: {
+      brand: '#171717',
+      brandInk: '#FAFAFA',
+      textLight: '#262626',
+      textDark: '#D4D4D4',
+      blobA: '#A3A3A3',
+      blobB: '#525252',
+    },
+  },
+  // Insta2 uslubi: tabiiy sage-zaytun-krem gamma
+  instagram2: {
+    id: 'instagram2',
+    name: 'Instagram 2',
+    tone: 'dark',
+    darkTint: 2,
+    colors: {
+      brand: '#5B5F44',
+      brandInk: '#ECE1D3',
+      textLight: '#5B5F44',
+      textDark: '#C6C8BA',
+      blobA: '#D7DCDB',
+      blobB: '#767A5C',
+    },
+  },
 } satisfies Record<string, Niche>
 
 // Nishani almashtirish uchun faqat shu qator o'zgaradi
-export const NICHE: Niche = NICHES.bridal
+export const NICHE: Niche = NICHES.blue

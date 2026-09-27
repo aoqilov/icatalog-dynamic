@@ -28,7 +28,7 @@ function RailItem({ label, badge, isActive = false, onClick, children }: RailIte
       className="flex w-full flex-col items-center gap-1 rounded-md py-1 focus-visible:outline-2 focus-visible:outline-brand"
     >
       <span
-        className={`relative flex size-12 items-center justify-center rounded-full border bg-tile p-0.5 transition-colors ${
+        className={`relative flex size-14.5 items-center justify-center rounded-full border bg-tile p-0.5 transition-colors ${
           isActive ? 'border-brand' : 'border-line'
         }`}
       >

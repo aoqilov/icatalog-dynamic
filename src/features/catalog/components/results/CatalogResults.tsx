@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { LuSearchX } from 'react-icons/lu'
 import type { ProductFilter } from '@/api/routes/products/products.types'
-import { Button } from '@/shared/ui/Button'
+import { CusButton } from '@/shared/ui/CusButton'
 import { useGetProducts } from '../../api-hooks/useGetProducts'
 import type { GridColumns } from '../../types'
 import { LoadMoreTrigger } from './LoadMoreTrigger'
@@ -36,9 +36,9 @@ export function CatalogResults({ selection, columns, onOpenPicker }: CatalogResu
       <div className="flex flex-col items-center gap-3 py-12 text-center">
         <LuSearchX aria-hidden className="size-10 text-muted" />
         <p className="text-[15px] font-semibold text-text">Bu tanlov bo'yicha mahsulot topilmadi</p>
-        <Button variant="secondary" onClick={onOpenPicker}>
+        <CusButton variant="secondary" onClick={onOpenPicker}>
           Kategoriyalarni o'zgartirish
-        </Button>
+        </CusButton>
       </div>
     )
   }
@@ -48,7 +48,10 @@ export function CatalogResults({ selection, columns, onOpenPicker }: CatalogResu
       <p className="text-sm text-muted">
         Topildi: <span className="font-semibold text-text">{total}</span>
       </p>
-      <ProductGrid products={products} columns={columns} />
+      {/* Ota konteynerning px-4'i (16px)dan 14px qaytarib olinadi: rasmlar chetdan atigi 2px qoladi */}
+      <div className="-mx-3.5">
+        <ProductGrid products={products} columns={columns} />
+      </div>
       {hasNextPage && <LoadMoreTrigger onLoadMore={loadMore} isLoading={isFetchingNextPage} />}
     </div>
   )

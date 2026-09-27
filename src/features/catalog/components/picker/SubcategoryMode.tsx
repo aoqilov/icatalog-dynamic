@@ -1,7 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import { LuArrowLeft } from 'react-icons/lu'
 import type { Category } from '@/api/routes/categories/categories.types'
 import { fadeSwap } from '@/lib/motion'
-import { CategoryTile } from '@/shared/ui/CategoryTile'
+import { CusButton } from '@/shared/ui/CusButton'
+import { CusCategoryTile } from '@/shared/ui/CusCategoryTile'
 import type { SelectionDraft } from '../../hooks/useSelectionDraft'
 import { CategoryRail } from './CategoryRail'
 
@@ -44,16 +46,24 @@ export function SubcategoryMode({
           aria-labelledby="picker-subcategories"
           className="flex min-w-0 flex-1 flex-col gap-3"
         >
-          <div className="flex items-baseline justify-between gap-2">
-            <h2 id="picker-subcategories" className="truncate text-[17px] font-bold text-text">
-              {activeCategory.name}
-            </h2>
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex min-w-0 items-center gap-1">
+              <CusButton
+                variant="icon"
+                aria-label="Kategoriyalarga qaytish"
+                onClick={onShowAll}
+                icon={<LuArrowLeft aria-hidden className="size-5" />}
+              />
+              <h2 id="picker-subcategories" className="truncate text-[17px] font-bold text-text">
+                {activeCategory.name}
+              </h2>
+            </div>
             <span className="shrink-0 text-xs text-muted" aria-live="polite">
               Tanlandi: <span className="font-semibold text-text">{selection.selectedCount(activeCategory)}</span>
             </span>
           </div>
 
-          <CategoryTile
+          <CusCategoryTile
             layout="banner"
             image={activeCategory.image}
             label="Barcha modellar"
@@ -65,7 +75,7 @@ export function SubcategoryMode({
           <ul className="grid grid-cols-2 gap-x-2 gap-y-3 sm:grid-cols-3">
             {activeCategory.subcategories.map((subcategory) => (
               <li key={subcategory.id}>
-                <CategoryTile
+                <CusCategoryTile
                   image={subcategory.image}
                   label={subcategory.name}
                   count={subcategory.productCount}

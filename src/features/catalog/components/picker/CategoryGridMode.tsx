@@ -1,5 +1,5 @@
 import type { Category } from '@/api/routes/categories/categories.types'
-import { CategoryTile } from '@/shared/ui/CategoryTile'
+import { CusCategoryTile } from '@/shared/ui/CusCategoryTile'
 import type { SelectionDraft } from '../../hooks/useSelectionDraft'
 
 type CategoryGridModeProps = {
@@ -14,7 +14,7 @@ export function CategoryGridMode({ categories, selection, totalCount, onOpen }: 
   return (
     <div className="flex flex-col gap-3">
       {/* Bo'sh tanlov = barcha mahsulotlar */}
-      <CategoryTile
+      <CusCategoryTile
         layout="banner"
         image={null}
         label="Barcha mahsulotlar"
@@ -26,7 +26,7 @@ export function CategoryGridMode({ categories, selection, totalCount, onOpen }: 
       <ul className="grid grid-cols-3 gap-x-2 gap-y-3 sm:grid-cols-4">
         {categories.map((category) => (
           <li key={category.id}>
-            <CategoryTile
+            <CusCategoryTile
               image={category.image}
               label={category.name}
               count={category.productCount}

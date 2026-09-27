@@ -1,26 +1,27 @@
 import type { IconType } from 'react-icons'
 import { LuCalendarCheck, LuScissors, LuTag } from 'react-icons/lu'
 import { TbHanger } from 'react-icons/tb'
-import type { Service, ServiceIcon } from '@/api/routes/services/services.types'
-import { Accordion } from '@/shared/ui/Accordion'
+import type { StoreService } from '@/api/routes/store/store.types'
+import { CusAccordion } from '@/shared/ui/CusAccordion'
 
 type ServicesAccordionProps = {
-  services: Service[]
+  services: StoreService[]
   onMore: () => void
 }
 
-const SERVICE_ICONS: Record<ServiceIcon, IconType> = {
-  rent: TbHanger,
-  sale: LuTag,
-  tailoring: LuScissors,
-  fitting: LuCalendarCheck,
+// iconId: backendning "icons" katalogidagi id (1=ijara, 2=sotuv, 3=tikish, 4=kiyib ko'rish)
+const SERVICE_ICONS: Record<number, IconType> = {
+  1: TbHanger,
+  2: LuTag,
+  3: LuScissors,
+  4: LuCalendarCheck,
 }
 
 // Kartaning o'zi glass, ichidagi tugma blur'siz (blur ichida blur bo'lmaydi).
 // "Batafsil" primary emas: ekranda bitta primary qoidasi, bu yerda esa har bir bandda bittadan chiqadi
 export function ServicesAccordion({ services, onMore }: ServicesAccordionProps) {
   const items = services.map((service) => {
-    const Icon = SERVICE_ICONS[service.icon]
+    const Icon = SERVICE_ICONS[service.iconId] ?? LuTag
     return {
       id: service.id,
       title: service.title,
@@ -47,7 +48,7 @@ export function ServicesAccordion({ services, onMore }: ServicesAccordionProps) 
         Xizmatlar
       </h2>
       <div className="glass rounded-md">
-        <Accordion items={items} defaultOpenId={services[0]?.id} />
+        <CusAccordion items={items} defaultOpenId={services[0]?.id} />
       </div>
     </section>
   )
