@@ -104,9 +104,6 @@ export function ProductDetails({ product }: ProductDetailsProps) {
         </div>
       </div>
 
-      {/* CusStickyActionBar ostida kontent qolmasligi uchun */}
-      <div aria-hidden="true" className="h-24" />
-
       <ProductActionBar
         isFavorite={favorite.isFavorite}
         onToggleFavorite={favorite.toggle}

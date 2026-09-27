@@ -6,13 +6,14 @@ export type CheckState = 'none' | 'some' | 'all'
 type CusCategoryTileProps = {
   image: string | null
   label: string
-  count: number
   state: CheckState
   onToggle: () => void
   // Berilsa, rasm bosilganda ichkariga kiriladi (masalan, subkategoriyalar), belgilash faqat doira orqali
   onOpen?: () => void
   // banner: keng plitka, nom va son rasm ustida ("Barcha mahsulotlar")
   layout?: 'square' | 'banner'
+  // Faqat banner'da ko'rsatiladi
+  count?: number
   countLabel?: string
 }
 
@@ -60,9 +61,11 @@ export function CusCategoryTile({
           {isBanner && (
             <span className="relative flex flex-col items-center">
               <span className="text-[17px] font-bold text-white">{label}</span>
-              <span className="text-xs font-semibold text-accent-on-image">
-                {count} {countLabel}
-              </span>
+              {count !== undefined && (
+                <span className="text-xs font-semibold text-accent-on-image">
+                  {count} {countLabel}
+                </span>
+              )}
             </span>
           )}
         </button>
@@ -95,12 +98,6 @@ export function CusCategoryTile({
           {state === 'some' && <LuMinus aria-hidden className="size-4" strokeWidth={3} />}
         </span>
       </button>
-
-      {!isBanner && (
-        <span className="glass-on-image pointer-events-none absolute top-2 right-2 flex h-6 min-w-6 items-center justify-center rounded-full px-1.5 text-[11px] font-bold">
-          {count}
-        </span>
-      )}
     </div>
   )
 }

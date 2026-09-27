@@ -29,7 +29,6 @@ export function CategoryGridMode({ categories, selection, totalCount, onOpen }: 
             <CusCategoryTile
               image={category.image}
               label={category.name}
-              count={category.productCount}
               state={selection.categoryState(category)}
               onToggle={() => selection.toggleCategory(category)}
               onOpen={() => onOpen(category.id)}

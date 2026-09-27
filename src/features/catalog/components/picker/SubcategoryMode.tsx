@@ -71,7 +71,6 @@ export function SubcategoryMode({
               <CusCategoryTile
                 image={subcategory.image}
                 label={subcategory.name}
-                count={subcategory.productCount}
                 state={selection.isSubcategorySelected(activeCategory, subcategory.id) ? 'all' : 'none'}
                 onToggle={() => selection.toggleSubcategory(activeCategory, subcategory.id)}
               />

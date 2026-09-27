@@ -25,8 +25,16 @@ function RailItem({ label, badge, isActive = false, onClick, children }: RailIte
       type="button"
       onClick={onClick}
       aria-current={isActive ? 'true' : undefined}
-      className="flex w-full flex-col items-center gap-1 rounded-md py-1 focus-visible:outline-2 focus-visible:outline-brand"
+      className="relative flex w-full flex-col items-center gap-1 rounded-md py-1 focus-visible:outline-2 focus-visible:outline-brand"
     >
+      {/* Faol belgisi: ekranning chap chetida (sahifa padding'i px-4 ichida), doira markaziga tekislangan */}
+      <span aria-hidden="true" className="absolute top-1 -left-4 flex h-14.5 items-center">
+        <span
+          className={`h-14 w-2 rounded-r-full bg-brand transition-transform duration-200 ease-out ${
+            isActive ? 'scale-y-100' : 'scale-y-0'
+          }`}
+        />
+      </span>
       <span
         className={`relative flex size-14.5 items-center justify-center rounded-full border bg-tile p-0.5 transition-colors ${
           isActive ? 'border-brand' : 'border-line'
@@ -59,7 +67,8 @@ export function CategoryRail({ categories, activeId, selection, onSelect, onShow
       aria-label="Kategoriyalar"
       className="sticky top-[73px] w-16 shrink-0 self-start md:top-[138px]"
     >
-      <ul className="flex max-h-[calc(100dvh-73px-9.5rem)] flex-col gap-2 overflow-y-auto pb-2">
+      {/* -ml-4 pl-4: overflow-y-auto chetni ham kesadi, faol belgisi sahifa padding'ida ko'rinishi uchun */}
+      <ul className="-ml-4 flex max-h-[calc(100dvh-73px-9.5rem)] flex-col gap-2 overflow-y-auto pb-2 pl-4">
         <li>
           <RailItem label="Hammasi" badge={totalSelected} onClick={onShowAll}>
             <LuLayoutGrid aria-hidden className="size-5 text-muted" />

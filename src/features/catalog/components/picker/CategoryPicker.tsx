@@ -36,8 +36,9 @@ export function CategoryPicker({ categories, initialSelection, onApply }: Catego
 
   return (
     <>
-      {/* overflow-x-clip: siljish paytida gorizontal scroll chiqmasin (clip sticky'ni buzmaydi) */}
-      <div className="overflow-x-clip">
+      {/* overflow-x-clip: siljish paytida gorizontal scroll chiqmasin (clip sticky'ni buzmaydi).
+          -mx-4 px-4: kesish chegarasi sahifa chetigacha, tasmaning faol belgisi padding'da ko'rinadi */}
+      <div className="-mx-4 overflow-x-clip px-4">
         {/* key o'zgarganda qayta mount bo'ladi va slide-switch kirish animatsiyasi o'ynaydi */}
         <div
           key={activeCategory ? 'subcategories' : 'categories'}
@@ -61,9 +62,6 @@ export function CategoryPicker({ categories, initialSelection, onApply }: Catego
           )}
         </div>
       </div>
-
-      {/* StickyActionBar ostida kontent qolmasligi uchun */}
-      <div aria-hidden="true" className="h-24" />
 
       <CusStickyActionBar>
         {/* glass-bar ichida: blur'siz, chegarali */}
