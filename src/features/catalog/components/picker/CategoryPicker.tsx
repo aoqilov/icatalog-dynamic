@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { LuArrowRight } from 'react-icons/lu'
 import type { Category } from '@/api/routes/categories/categories.types'
 import type { ProductFilter } from '@/api/routes/products/products.types'
+import { appScrollElement } from '@/lib/appScroll'
 import { slideSwitch } from '@/lib/motion'
 import { CusButton } from '@/shared/ui/CusButton'
 import { CusStickyActionBar } from '@/shared/ui/CusStickyActionBar'
@@ -32,7 +33,7 @@ export function CategoryPicker({ categories, initialSelection, onApply }: Catego
   const changeMode = (next: PickerMode) => {
     if (next.type !== mode.type) setDirection(next.type === 'subcategories' ? 1 : -1)
     setMode(next)
-    window.scrollTo({ top: 0 })
+    appScrollElement().scrollTo({ top: 0 })
   }
 
   return (

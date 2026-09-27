@@ -14,6 +14,7 @@ export const productsKeys = {
   count: (filter: ProductFilter) => [...productsKeys.all, 'count', filter] as const,
   detail: (id: string) => [...productsKeys.all, id] as const,
   timeline: () => [...productsKeys.all, 'timeline'] as const,
+  timelinePage: (pageSize: number) => [...productsKeys.all, 'timeline', 'page', pageSize] as const,
 }
 
 function matchesFilter(product: Product, filter: ProductFilter) {
@@ -62,7 +63,8 @@ export const productsApi = {
     return data
   },
 
-  // Barcha mahsulotlar qo'shilgan sanasi bo'yicha, eng yangisi birinchi ("Yangi" bo'limi lentasi va kalendari)
+  // Barcha mahsulotlar qo'shilgan sanasi bo'yicha, eng yangisi birinchi. Kalendar uchun (barcha kunlarni bilishi
+  // kerak) va kalendardan aniq kunga o'tilganda ishlatiladi — lentaning odatiy holati getTimelinePage'dan foydalanadi
   getTimeline: async (): Promise<Product[]> => {
     if (env.useMock) {
       return [...productsMock].sort((a, b) => b.createdAt.localeCompare(a.createdAt))
@@ -75,6 +77,24 @@ export const productsApi = {
       pageSize: 100,
     })
     return data.items
+  },
+
+  // "Yangi" lentasi uchun sahifalab: page 1 — eng yangi pageSize ta, page 2 — undan oldingilar va h.k.
+  getTimelinePage: async ({ page, pageSize }: { page: number; pageSize: number }): Promise<ProductListResponse> => {
+    if (env.useMock) {
+      const sorted = [...productsMock].sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      const start = (page - 1) * pageSize
+      return {
+        items: sorted.slice(start, start + pageSize),
+        total: sorted.length,
+        page,
+        hasMore: start + pageSize < sorted.length,
+      }
+    }
+
+    // Taxminiy: tartiblash parametri api.yaml'da yo'q — backend bilan aniqlanadi
+    const { data } = await api.post<ProductListResponse>('/public/products/get-all/', { page, pageSize })
+    return data
   },
 
   count: async (filter: ProductFilter): Promise<number> => {

@@ -2,9 +2,11 @@ import { useEffect } from 'react'
 import { Link } from 'react-router'
 import type { Product } from '@/api/routes/products/products.types'
 import { ROUTES } from '@/config/routes'
+import { appScrollElement } from '@/lib/appScroll'
 import { dayKey } from '@/lib/dayKey'
 import { formatPrice } from '@/lib/formatPrice'
 import { OFFER_LABELS, primaryOffer } from '@/lib/productDisplay'
+import { LoadMoreTrigger } from '@/shared/components/LoadMoreTrigger'
 import type { FeedColumns } from '../types'
 import { DayDivider } from './DayDivider'
 import { ProductCollage } from './ProductCollage'
@@ -15,6 +17,12 @@ type NewArrivalsFeedProps = {
   columns: FeedColumns
   // Kalendardan tanlangan kun: lenta shu sanaga aylanadi
   focusDay: string | null
+  // Berilsa, ro'yxat tepasida "eski postlarni yuklash" ko'rsatiladi (faqat sahifalab yuklanadigan holatda)
+  olderPosts?: {
+    hasMore: boolean
+    isLoading: boolean
+    onLoadMore: () => void
+  }
 }
 
 const linkClass = 'block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand'
@@ -85,7 +93,7 @@ function ProductPost({ product }: ProductPostProps) {
 
 // Telegram kanali kabi: eskisi tepada, eng yangisi eng pastda. Ochilganda sahifa pastga aylanadi,
 // oldingi mahsulotlarni ko'rish uchun yuqoriga suriladi
-export function NewArrivalsFeed({ products, columns, focusDay }: NewArrivalsFeedProps) {
+export function NewArrivalsFeed({ products, columns, focusDay, olderPosts }: NewArrivalsFeedProps) {
   const groups = groupByDay([...products].reverse())
 
   // Kollajlarning nisbati (aspect) oldindan belgilangan — rasmlar yuklanmasdan ham balandlik aniq,
@@ -95,11 +103,15 @@ export function NewArrivalsFeed({ products, columns, focusDay }: NewArrivalsFeed
       document.getElementById(`day-${focusDay}`)?.scrollIntoView({ block: 'start' })
       return
     }
-    window.scrollTo({ top: document.documentElement.scrollHeight })
+    appScrollElement().scrollTo({ top: appScrollElement().scrollHeight })
   }, [focusDay, columns])
 
   return (
     <div className="flex flex-col">
+      {olderPosts?.hasMore && (
+        <LoadMoreTrigger onLoadMore={olderPosts.onLoadMore} isLoading={olderPosts.isLoading} />
+      )}
+
       {groups.map(([key, items]) => (
         <section key={key} aria-labelledby={`day-${key}`}>
           <DayDivider dayKey={key} date={items[0].createdAt} />

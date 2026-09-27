@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router'
+import { appScrollElement } from '@/lib/appScroll'
 import type { FeedColumns, NewArrivalsView } from '../types'
 
 // Holat URL'da: ?view=calendar yoki ?view=feed&cols=3&day=2026-09-21
@@ -30,7 +31,7 @@ export function useNewArrivalsParams() {
     if (next.day) search.set('day', next.day)
 
     setParams(search, { replace: options.replace })
-    if (next.view !== state.view) window.scrollTo({ top: 0 })
+    if (next.view !== state.view) appScrollElement().scrollTo({ top: 0 })
   }
 
   return {

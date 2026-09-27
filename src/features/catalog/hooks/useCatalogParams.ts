@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router'
 import type { ProductFilter } from '@/api/routes/products/products.types'
+import { appScrollElement } from '@/lib/appScroll'
 import type { CatalogStep, GridColumns } from '../types'
 
 // Katalog holati URL'da: ?step=results&cat=1,3&sub=102&cols=2
@@ -62,7 +63,7 @@ export function useCatalogParams() {
     if (next.selection.subcategoryIds.length) search.set('sub', next.selection.subcategoryIds.join(','))
 
     setParams(search, { replace: options.replace })
-    if (next.step !== state.step) window.scrollTo({ top: 0 })
+    if (next.step !== state.step) appScrollElement().scrollTo({ top: 0 })
   }
 
   return {

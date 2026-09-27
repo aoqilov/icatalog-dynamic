@@ -4,7 +4,7 @@ import type { ProductFilter } from '@/api/routes/products/products.types'
 import { CusButton } from '@/shared/ui/CusButton'
 import { useGetProducts } from '../../api-hooks/useGetProducts'
 import type { GridColumns } from '../../types'
-import { LoadMoreTrigger } from './LoadMoreTrigger'
+import { LoadMoreTrigger } from '@/shared/components/LoadMoreTrigger'
 import { ProductGrid } from './ProductGrid'
 import { ResultsSkeleton } from './ResultsSkeleton'
 

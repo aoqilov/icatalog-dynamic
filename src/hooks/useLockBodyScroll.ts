@@ -1,14 +1,17 @@
 import { useEffect } from 'react'
+import { appScrollElement } from '@/lib/appScroll'
 
+// body doim qotib turadi (style/index.css), shuning uchun bu yerda haqiqiy scroll qiladigan #root bloklanadi
 export function useLockBodyScroll(isLocked: boolean) {
   useEffect(() => {
     if (!isLocked) return
 
-    const { overflow } = document.body.style
-    document.body.style.overflow = 'hidden'
+    const element = appScrollElement()
+    const { overflow } = element.style
+    element.style.overflow = 'hidden'
 
     return () => {
-      document.body.style.overflow = overflow
+      element.style.overflow = overflow
     }
   }, [isLocked])
 }

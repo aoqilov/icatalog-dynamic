@@ -148,7 +148,9 @@
 }
 
 /* ---------- 4. Base ---------- */
-html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-ui); }
+/* body emas, #root suriladi: body har doim joyida qotib turadi (bounce/rezinka effekti bo'lmaydi) */
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-ui); }
+#root { height: 100%; overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 * { scrollbar-width: none; }
 *::-webkit-scrollbar { display: none; }
 
