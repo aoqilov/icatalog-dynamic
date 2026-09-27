@@ -7,8 +7,8 @@ type CategoryGridProps = {
   categories: Category[]
 }
 
-// Ekranda 2 qator × 4 ustun (8 ta) ko'rinadi, qolganlari x-o'qi bo'ylab scroll qilinadi
-const VISIBLE_COUNT = 8
+// Ekranda bitta qatorda 4 ta to'liq ko'rinadi, qolganlari x-o'qi bo'ylab scroll qilinadi
+const VISIBLE_COUNT = 4
 
 // Aylanalar ataylab glass emas (bg-tile): ko'p blur qatlam telefonda sahifani sekinlashtiradi
 export function CategoryGrid({ categories }: CategoryGridProps) {
@@ -32,7 +32,7 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
       {/* -mx-4 px-4: scroll ekran chetigacha boradi, lekin birinchi ustun gutter bilan tekis turadi.
           Ustun kengligi: 4 ta ustun + keyingisidan bir parcha ko'rinadi (scroll borligini bildiradi).
           Kenglik foizda, zoom uni kichraytirmaydi: doiralar 0.9x bo'lishi uchun bo'luvchi 4.3 emas, 4.8 */}
-      <ul className="-mx-4 grid snap-x snap-mandatory auto-cols-[calc((100%-3*0.75rem)/4.8)] grid-flow-col grid-rows-2 gap-3 overflow-x-auto scroll-px-4 px-4 pb-1">
+      <ul className="-mx-4 grid snap-x snap-mandatory auto-cols-[calc((100%-3*0.75rem)/4.8)] grid-flow-col gap-3 overflow-x-auto scroll-px-4 px-4 pb-1">
         {categories.map((category) => (
           <li key={category.id} className="snap-start">
             <Link

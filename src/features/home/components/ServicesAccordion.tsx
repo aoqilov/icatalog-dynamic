@@ -32,7 +32,9 @@ export function ServicesAccordion({ services }: ServicesAccordionProps) {
       <h2 id="home-services" className="text-[17px] font-bold text-text">
         Xizmatlar
       </h2>
-      <div className="glass rounded-md">
+      {/* glass emas: .glass'ning :active (scale) va :hover (filter) holatlari butun kartaga tushadi,
+          blur esa balandlik animatsiyasining har kadrida qayta hisoblanadi — accordion qotadi */}
+      <div className="rounded-md border border-line bg-tile">
         <CusAccordion items={items} defaultOpenId={services[0]?.id} />
       </div>
     </section>

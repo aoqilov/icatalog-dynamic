@@ -50,7 +50,7 @@ export function FeatureHome() {
         <QuickActions store={store.data} onSelect={setContactKind} />
         <div className="gline" />
 
-        {categories.isPending && <div className="h-40 animate-pulse rounded-md bg-fill" />}
+        {categories.isPending && <div className="h-24 animate-pulse rounded-md bg-fill" />}
         {categories.isError && <p className={errorClass}>Kategoriyalar yuklanmadi</p>}
         {categories.isSuccess && <CategoryGrid categories={categories.data} />}
 
