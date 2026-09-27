@@ -13,6 +13,9 @@ import { StoreHero } from './components/StoreHero'
 import type { ContactKind } from './types'
 
 const errorClass = 'py-6 text-center text-sm text-muted'
+// Bosh sahifa boshqa sahifalardan 0.9x kichikroq: barcha o'lcham (px ham) bir xil kichrayadi.
+// Modal oynalar portal orqali body'da, ularga ta'sir qilmaydi
+const zoomClass = 'zoom-[0.9]'
 
 export function FeatureHome() {
   const store = useGetStore()
@@ -22,7 +25,13 @@ export function FeatureHome() {
 
   const closeContacts = useCallback(() => setContactKind(null), [])
 
-  if (store.isPending) return <HomeSkeleton />
+  if (store.isPending) {
+    return (
+      <div className={zoomClass}>
+        <HomeSkeleton />
+      </div>
+    )
+  }
 
   if (store.isError) {
     return <p className={errorClass}>Do'kon ma'lumotlari yuklanmadi</p>
@@ -33,7 +42,7 @@ export function FeatureHome() {
   const promotionItems = news.data?.filter((item) => item.newsType === 'discount') ?? []
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col pb-8">
+    <div className={`mx-auto flex max-w-2xl flex-col pb-8 ${zoomClass}`}>
       <StoreHero store={store.data} />
 
       <div className="mt-4 flex flex-col gap-5 px-4">

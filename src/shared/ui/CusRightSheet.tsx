@@ -1,5 +1,6 @@
 import { useEffect, useId } from 'react'
 import type { ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import { LuX } from 'react-icons/lu'
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
 import { usePresence } from '@/hooks/usePresence'
@@ -42,7 +43,8 @@ export function CusRightSheet({ isOpen, onClose, title, width = 'half', children
 
   if (!isMounted) return null
 
-  return (
+  // Portal: ota elementning zoom / transform / overflow'i fixed oynaga ta'sir qilmasin
+  return createPortal(
     <div data-state={state} className="group fixed inset-0 z-60 flex items-stretch justify-end data-[state=closed]:pointer-events-none">
       <div
         onClick={onClose}
@@ -75,6 +77,7 @@ export function CusRightSheet({ isOpen, onClose, title, width = 'half', children
         <div className="gline" />
         <div className="overflow-y-auto px-4 py-3">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

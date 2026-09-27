@@ -12,9 +12,9 @@ const VISIBLE_COUNT = 8
 
 // Aylanalar ataylab glass emas (bg-tile): ko'p blur qatlam telefonda sahifani sekinlashtiradi
 export function CategoryGrid({ categories }: CategoryGridProps) {
-
   return (
-    <section aria-labelledby="home-categories" className="flex flex-col gap-3">
+    // zoom 0.9: sarlavha, matn va oraliqlar sahifaning qolgan qismidan yana 0.9x kichik
+    <section aria-labelledby="home-categories" className="flex flex-col gap-3 zoom-[0.9]">
       <div className="flex items-center justify-between">
         <h2 id="home-categories" className="text-[17px] font-bold text-text">
           Kategoriyalar
@@ -30,8 +30,9 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
       </div>
 
       {/* -mx-4 px-4: scroll ekran chetigacha boradi, lekin birinchi ustun gutter bilan tekis turadi.
-          Ustun kengligi: 4 ta ustun + keyingisidan bir parcha ko'rinadi (scroll borligini bildiradi) */}
-      <ul className="-mx-4 grid snap-x snap-mandatory auto-cols-[calc((100%-3*0.75rem)/4.3)] grid-flow-col grid-rows-2 gap-3 overflow-x-auto scroll-px-4 px-4 pb-1">
+          Ustun kengligi: 4 ta ustun + keyingisidan bir parcha ko'rinadi (scroll borligini bildiradi).
+          Kenglik foizda, zoom uni kichraytirmaydi: doiralar 0.9x bo'lishi uchun bo'luvchi 4.3 emas, 4.8 */}
+      <ul className="-mx-4 grid snap-x snap-mandatory auto-cols-[calc((100%-3*0.75rem)/4.8)] grid-flow-col grid-rows-2 gap-3 overflow-x-auto scroll-px-4 px-4 pb-1">
         {categories.map((category) => (
           <li key={category.id} className="snap-start">
             <Link
