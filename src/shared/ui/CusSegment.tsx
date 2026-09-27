@@ -71,7 +71,8 @@ export function CusSegment<T extends string | number>({
             tabIndex={isSelected ? 0 : -1}
             onClick={() => onChange(option.value)}
             onKeyDown={(event) => handleKeyDown(event, index)}
-            className={`flex min-w-11 flex-1 items-center justify-center gap-1.5 rounded-sm px-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
+            // rounded-pill: trek bilan konsentrik (34px balandlikda 17px = trek 20px − padding 3px)
+            className={`flex min-w-11 flex-1 items-center justify-center gap-1.5 rounded-pill px-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
               isSelected ? 'glass-brand' : 'border border-transparent text-muted hover:text-text'
             }`}
           >

@@ -32,9 +32,9 @@ export function CusCategoryTile({
   const isChecked = state !== 'none'
 
   return (
-    <div className="relative">
+    <div>
       <div
-        className={`rounded-tile border bg-tile p-[3px] transition-colors ${
+        className={`relative rounded-tile border bg-tile p-[3px] transition-colors ${
           isChecked ? 'border-brand' : 'border-line'
         }`}
       >
@@ -69,6 +69,25 @@ export function CusCategoryTile({
             </span>
           )}
         </button>
+
+        {/* Rasmning o'ng pastki burchagida (ramka ichida, pastdagi nom hisobga olinmaydi). Bosish maydoni 44×44 */}
+        <button
+          type="button"
+          role="checkbox"
+          aria-checked={state === 'some' ? 'mixed' : state === 'all'}
+          aria-label={`${label}: tanlash`}
+          onClick={onToggle}
+          className="group absolute right-0 bottom-0 flex size-11 items-end justify-end p-2 focus-visible:outline-none"
+        >
+          <span
+            className={`flex size-6 items-center justify-center rounded-full group-focus-visible:outline-2 group-focus-visible:outline-offset-1 group-focus-visible:outline-brand ${
+              isChecked ? 'glass-brand' : 'glass-on-image'
+            }`}
+          >
+            {state === 'all' && <LuCheck aria-hidden className="size-4" strokeWidth={3} />}
+            {state === 'some' && <LuMinus aria-hidden className="size-4" strokeWidth={3} />}
+          </span>
+        </button>
       </div>
 
       {!isBanner && (
@@ -80,24 +99,6 @@ export function CusCategoryTile({
           {label}
         </p>
       )}
-
-      <button
-        type="button"
-        role="checkbox"
-        aria-checked={state === 'some' ? 'mixed' : state === 'all'}
-        aria-label={`${label}: tanlash`}
-        onClick={onToggle}
-        className="group absolute top-0 left-0 flex size-11 items-start justify-start p-2 focus-visible:outline-none"
-      >
-        <span
-          className={`flex size-6 items-center justify-center rounded-full group-focus-visible:outline-2 group-focus-visible:outline-offset-1 group-focus-visible:outline-brand ${
-            isChecked ? 'glass-brand' : 'glass-on-image'
-          }`}
-        >
-          {state === 'all' && <LuCheck aria-hidden className="size-4" strokeWidth={3} />}
-          {state === 'some' && <LuMinus aria-hidden className="size-4" strokeWidth={3} />}
-        </span>
-      </button>
     </div>
   )
 }

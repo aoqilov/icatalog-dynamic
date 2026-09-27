@@ -48,8 +48,9 @@ export function CatalogResults({ selection, columns, onOpenPicker }: CatalogResu
       <p className="text-sm text-muted">
         Topildi: <span className="font-semibold text-text">{total}</span>
       </p>
-      {/* Ota konteynerning px-4'i (16px)dan 14px qaytarib olinadi: rasmlar chetdan atigi 2px qoladi */}
-      <div className="-mx-3.5">
+      {/* 2 va 3 ustun: ota konteynerning px-4'i (16px)dan 14px qaytarib olinadi, rasmlar chetdan atigi 2px qoladi.
+          1 ustunda kartaning matni ham bor, u sahifaning odatiy 16px chetida turadi */}
+      <div className={columns === 1 ? '' : '-mx-3.5'}>
         <ProductGrid products={products} columns={columns} />
       </div>
       {hasNextPage && <LoadMoreTrigger onLoadMore={loadMore} isLoading={isFetchingNextPage} />}
