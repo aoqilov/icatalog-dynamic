@@ -64,7 +64,7 @@ src/
 │   ├── ui/                        # oddiy UI elementlar: Button, Input, Modal
 │   └── components/                # bir nechta feature ishlatadigan komponentlar
 ├── assets/                        # rasm, shrift, ikonkalar
-├── config/                        # env.ts, routes.ts, navigation.ts, site.ts, niche.ts, konstantalar
+├── config/                        # env.ts, routes.ts, navigation.ts, site.ts, niche.ts, ui.ts (umumiy klass konstantalari), konstantalar
 ├── types/                         # API'dan tashqari umumiy tiplar
 ├── hooks/                         # hamma joyda ishlatiladigan hook'lar
 └── lib/                           # applyNiche.ts, yordamchi funksiyalar

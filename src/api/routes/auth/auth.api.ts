@@ -1,16 +1,28 @@
 import { env } from '@/config/env'
 import { api } from '../../api-config/axios'
-import { buyerMock, tokenPairMock } from './auth.mockdata'
-import type { Buyer, BuyerUpdateRequest, LoginRequest, TokenPair } from './auth.types'
+import { buyerTemplateMock, tokenPairMock } from './auth.mockdata'
+import type { Buyer, BuyerUpdateRequest, LoginRequest, RegisterRequest, TokenPair } from './auth.types'
 
 export const authKeys = {
-  me: ['auth', 'me'] as const,
+  all: ['auth'] as const,
+  me: () => [...authKeys.all, 'me'] as const,
 }
 
-// Mock rejimda mutatsiya qilinadigan xoldagi nusxa
-let currentBuyer: Buyer = { ...buyerMock }
+// Mock rejimda mutatsiya qilinadigan xoldagi nusxa. null: ro'yxatdan o'tilmagan
+let currentBuyer: Buyer | null = null
 
 export const authApi = {
+  register: async (request: RegisterRequest): Promise<Buyer> => {
+    if (env.useMock) {
+      const now = new Date().toISOString()
+      currentBuyer = { ...buyerTemplateMock, ...request, createdAt: now, updatedAt: now }
+      return currentBuyer
+    }
+
+    const { data } = await api.post<Buyer>('/customers/register', request)
+    return data
+  },
+
   login: async (credentials: LoginRequest): Promise<TokenPair> => {
     if (env.useMock) return tokenPairMock
 
@@ -18,7 +30,8 @@ export const authApi = {
     return data
   },
 
-  me: async (): Promise<Buyer> => {
+  // Ro'yxatdan o'tilmagan (token yo'q) bo'lsa null
+  me: async (): Promise<Buyer | null> => {
     if (env.useMock) return currentBuyer
 
     const { data } = await api.get<Buyer>('/customers/me')
@@ -27,6 +40,7 @@ export const authApi = {
 
   updateMe: async (patch: BuyerUpdateRequest): Promise<Buyer> => {
     if (env.useMock) {
+      if (!currentBuyer) throw new Error("Ro'yxatdan o'tilmagan")
       currentBuyer = { ...currentBuyer, ...patch, updatedAt: new Date().toISOString() }
       return currentBuyer
     }

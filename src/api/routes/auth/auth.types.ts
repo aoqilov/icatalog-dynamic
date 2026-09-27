@@ -3,6 +3,12 @@
 
 export type Gender = 'male' | 'female'
 
+// api.yaml'da hali yo'q: endpoint va maydonlar taxminiy, backend ulanganda tekshiriladi
+export type RegisterRequest = {
+  firstName: string
+  login: string // telefon raqam, +998XXXXXXXXX
+}
+
 export type LoginRequest = {
   login: string
   password: string

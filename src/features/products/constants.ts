@@ -6,5 +6,3 @@ export const OFFER_NOTES: Record<OfferType, string> = {
   sale: "Libos sizniki bo'ladi, o'lchamga moslash bepul.",
   tailoring: 'Eskiz va mato birga tanlanadi, tikish 3–6 hafta davom etadi.',
 }
-
-export const SECTION_LABEL_CLASS = 'text-xs font-semibold uppercase tracking-wide text-muted'

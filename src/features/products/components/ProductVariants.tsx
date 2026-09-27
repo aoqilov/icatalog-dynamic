@@ -1,6 +1,6 @@
 import { LuCheck, LuImage } from 'react-icons/lu'
 import type { ProductVariant } from '@/api/routes/products/products.types'
-import { SECTION_LABEL_CLASS } from '../constants'
+import { SECTION_LABEL_CLASS } from '@/config/ui'
 
 type ProductVariantsProps = {
   variants: ProductVariant[]

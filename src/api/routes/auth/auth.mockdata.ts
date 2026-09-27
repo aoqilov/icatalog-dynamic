@@ -1,18 +1,17 @@
-import { mockImage } from '@/lib/mockImage'
 import type { Buyer, TokenPair } from './auth.types'
 
-// Mock rejimda doim tizimga kirgan holatda ishlaydi
-export const buyerMock: Buyer = {
+// Mock rejim ro'yxatdan o'tilmagan holatdan boshlanadi. Ro'yxatdan o'tilganda shu shablon asosida xaridor yaratiladi
+export const buyerTemplateMock: Buyer = {
   id: 1,
-  login: '+998901112233',
+  login: '',
   active: true,
-  firstName: 'Nozima',
-  lastName: 'Karimova',
+  firstName: '',
+  lastName: '',
   middleName: '',
-  age: 26,
-  gender: 'female',
-  city: 'Toshkent',
-  avatarPhoto: mockImage('buyer-1', 200, 200),
+  age: null,
+  gender: null,
+  city: '',
+  avatarPhoto: null,
   createdAt: '2026-06-01T09:00:00Z',
   updatedAt: '2026-06-01T09:00:00Z',
 }

@@ -1,6 +1,7 @@
 import { useTheme } from '@/hooks/useTheme'
 import { ThemeToggle } from '@/shared/components/ThemeToggle'
 import { ButtonsDemo } from './components/ButtonsDemo'
+import { InputDemo } from './components/InputDemo'
 import { NicheDemo } from './components/NicheDemo'
 import { PlaygroundSection } from './components/PlaygroundSection'
 import { RightSheetDemo } from './components/RightSheetDemo'
@@ -26,6 +27,7 @@ export function FeaturePlayground() {
       <NicheDemo />
       <ButtonsDemo />
       <SegmentedDemo />
+      <InputDemo />
       <RightSheetDemo />
 
       <PlaygroundSection title="BottomNav">

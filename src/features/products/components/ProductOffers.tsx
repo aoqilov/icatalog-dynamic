@@ -2,7 +2,8 @@ import { formatPrice } from '@/lib/formatPrice'
 import { OFFER_LABELS } from '@/lib/productDisplay'
 import type { Offer, OfferType } from '@/lib/productDisplay'
 import { CusSegment } from '@/shared/ui/CusSegment'
-import { OFFER_NOTES, SECTION_LABEL_CLASS } from '../constants'
+import { SECTION_LABEL_CLASS } from '@/config/ui'
+import { OFFER_NOTES } from '../constants'
 
 type ProductOffersProps = {
   offers: Offer[]

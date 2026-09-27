@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { ProductSize } from '@/api/routes/products/products.types'
-import { SECTION_LABEL_CLASS } from '../constants'
+import { SECTION_LABEL_CLASS } from '@/config/ui'
 
 type ProductSizesProps = {
   sizes: ProductSize[]
