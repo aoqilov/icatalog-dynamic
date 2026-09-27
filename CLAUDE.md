@@ -4,7 +4,7 @@ Foydalanuvchi bilan o'zbek tilida (lotin yozuvida) yoziladi. Kod, fayl nomlari v
 
 ## Stack
 
-React 19 · TypeScript 6 · Vite 8 · Tailwind CSS 4 · axios · TanStack Query 5 · framer-motion · React Router 7 · react-icons · react-zoom-pan-pinch (mahsulot rasmini kattalashtirish) · oxlint
+React 19 · TypeScript 6 · Vite 8 · Tailwind CSS 4 · axios · TanStack Query 5 · React Router 7 · react-icons · react-zoom-pan-pinch (mahsulot rasmini kattalashtirish) · oxlint
 
 ## Buyruqlar
 
@@ -32,7 +32,8 @@ src/
 ├── App.tsx                        # global provider'lar (QueryClientProvider) + RouterProvider
 ├── style/                         # barcha .css fayllar
 │   ├── index.css                  # Tailwind, glass.css importi, @theme tokenlari
-│   └── glass.css                  # glass dizayn-tizimi: tokenlar va recipe klasslar
+│   ├── glass.css                  # glass dizayn-tizimi: tokenlar va recipe klasslar
+│   └── motion.css                 # animatsiya keyframe'lari (animate-* klasslari)
 ├── vite-env.d.ts                  # env o'zgaruvchilarining tiplari
 ├── api/
 │   ├── api-config/
@@ -66,7 +67,7 @@ src/
 ├── config/                        # env.ts, routes.ts, navigation.ts, site.ts, niche.ts, konstantalar
 ├── types/                         # API'dan tashqari umumiy tiplar
 ├── hooks/                         # hamma joyda ishlatiladigan hook'lar
-└── lib/                           # motion.ts, applyNiche.ts, yordamchi funksiyalar
+└── lib/                           # applyNiche.ts, yordamchi funksiyalar
 ```
 
 ## Qoidalar
@@ -151,8 +152,11 @@ src/
 - Yorug' mavzuda neytral ranglar (`bg`, `fill`, `tile`, `text`, `muted`) nishaga bog'liq emas. Qorong'i mavzuda esa `bg`, `fill`, `tile` va `muted` neytral qoraga nishaning `darkTint` foizicha brand rangini aralashtirib hisoblanadi (`--dark-tint`, 0 bo'lsa sof neytral).
 - Yangi nisha qo'shishda kontrast tekshiriladi: `brandInk` glass-brand ustida va `textLight` / `textDark` fon ustida kamida 4.5:1, ikkala mavzuda.
 - Mobile-first: avval mobil uchun klasslar yoziladi, katta ekranlar uchun `sm:` / `md:` / `lg:` qo'shiladi. Har bir komponent 360px kenglikda ham to'g'ri ko'rinishi shart.
-- Qayta ishlatiladigan framer-motion variantlari `lib/motion.ts`da turadi.
-- `App.tsx`dagi `MotionConfig reducedMotion="user"` OS'dagi "harakatni kamaytirish" sozlamasini hurmat qiladi, har bir animatsiyada alohida tekshirish shart emas. Ichkariga kirish / orqaga qaytish uchun `slideSwitch` (`custom`: 1 yoki -1), bir joyda kontent almashishi uchun `fadeSwap` ishlatiladi.
+- Animatsiya kutubxonasi yo'q, hammasi CSS bilan. Keyframe'lar `style/motion.css`dagi `@theme`da turadi va `animate-<nom>` klasslari sifatida ishlatiladi: `fade-in` / `fade-out`, `slide-in-up` / `slide-out-down`, `slide-in-right` / `slide-out-right`, `slide-switch`, `fade-swap`.
+- Ochilib-yopiladigan oyna (sheet, viewer) `hooks/usePresence(isOpen, exitMs)` bilan: u yopilgandan keyin `exitMs` davomida elementni `data-state="closed"` bilan DOM'da ushlab turadi, chiqish animatsiyasi `data-[state=closed]:animate-*` (ichki elementlarga `group-data-[state=closed]:`) bilan beriladi. `exitMs` `motion.css`dagi chiqish davomiyligiga teng bo'ladi.
+- Balandligi `auto` bo'lgan blokni ochish-yopish (accordion, qidiruv paneli): `grid` + `grid-rows-[0fr]` ↔ `grid-rows-[1fr]` transition, ichida `overflow-hidden` o'rovchi. Yopiq blokka `inert` qo'yiladi.
+- Ichkariga kirish / orqaga qaytish uchun `animate-slide-switch` (`[--switch-dir:1]` yoki `[--switch-dir:-1]`), bir joyda kontent almashishi uchun `animate-fade-swap` ishlatiladi. Ikkalasi faqat kirish animatsiyasi: element `key` o'zgarganda qayta mount bo'lib o'ynaydi.
+- `motion.css`dagi `prefers-reduced-motion` qoidasi barcha animatsiya va transition'larni o'chiradi, har bir komponentda alohida tekshirish shart emas.
 
 ### Kod uslubi
 - Faqat named export (`export function HomePage`), default export ishlatilmaydi.

@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { LuHeart } from 'react-icons/lu'
 import { Link, NavLink } from 'react-router'
 import { NAV_LINKS } from '@/config/navigation'
@@ -32,12 +31,12 @@ export function Header({ hideOnMobile = false }: HeaderProps) {
               {({ isActive }) => (
                 <>
                   {link.label}
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-underline"
-                      className="absolute inset-x-0 -bottom-0.5 h-0.5 rounded-full bg-brand"
-                    />
-                  )}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute inset-x-0 -bottom-0.5 h-0.5 rounded-full bg-brand transition-transform duration-200 ease-out ${
+                      isActive ? 'scale-x-100' : 'scale-x-0'
+                    }`}
+                  />
                 </>
               )}
             </NavLink>

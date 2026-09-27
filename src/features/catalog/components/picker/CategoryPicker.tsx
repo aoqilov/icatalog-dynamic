@@ -1,10 +1,8 @@
-import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import { LuArrowRight } from 'react-icons/lu'
 import type { Category } from '@/api/routes/categories/categories.types'
 import type { ProductFilter } from '@/api/routes/products/products.types'
 import { appScrollElement } from '@/lib/appScroll'
-import { slideSwitch } from '@/lib/motion'
 import { CusButton } from '@/shared/ui/CusButton'
 import { CusStickyActionBar } from '@/shared/ui/CusStickyActionBar'
 import { useGetProductsCount } from '../../api-hooks/useGetProductsCount'
@@ -40,33 +38,28 @@ export function CategoryPicker({ categories, initialSelection, onApply }: Catego
     <>
       {/* overflow-x-clip: siljish paytida gorizontal scroll chiqmasin (clip sticky'ni buzmaydi) */}
       <div className="overflow-x-clip">
-        <AnimatePresence mode="wait" initial={false} custom={direction}>
-          <motion.div
-            key={activeCategory ? 'subcategories' : 'categories'}
-            custom={direction}
-            variants={slideSwitch}
-            initial="enter"
-            animate="center"
-            exit="exit"
-          >
-            {activeCategory ? (
-              <SubcategoryMode
-                categories={categories}
-                activeCategory={activeCategory}
-                selection={selection}
-                onSelectCategory={(categoryId) => changeMode({ type: 'subcategories', categoryId })}
-                onShowAll={() => changeMode({ type: 'categories' })}
-              />
-            ) : (
-              <CategoryGridMode
-                categories={categories}
-                selection={selection}
-                totalCount={totalCount}
-                onOpen={(categoryId) => changeMode({ type: 'subcategories', categoryId })}
-              />
-            )}
-          </motion.div>
-        </AnimatePresence>
+        {/* key o'zgarganda qayta mount bo'ladi va slide-switch kirish animatsiyasi o'ynaydi */}
+        <div
+          key={activeCategory ? 'subcategories' : 'categories'}
+          className={`animate-slide-switch ${direction === 1 ? '[--switch-dir:1]' : '[--switch-dir:-1]'}`}
+        >
+          {activeCategory ? (
+            <SubcategoryMode
+              categories={categories}
+              activeCategory={activeCategory}
+              selection={selection}
+              onSelectCategory={(categoryId) => changeMode({ type: 'subcategories', categoryId })}
+              onShowAll={() => changeMode({ type: 'categories' })}
+            />
+          ) : (
+            <CategoryGridMode
+              categories={categories}
+              selection={selection}
+              totalCount={totalCount}
+              onOpen={(categoryId) => changeMode({ type: 'subcategories', categoryId })}
+            />
+          )}
+        </div>
       </div>
 
       {/* StickyActionBar ostida kontent qolmasligi uchun */}

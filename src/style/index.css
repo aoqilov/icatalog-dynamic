@@ -1,6 +1,7 @@
 @import "tailwindcss";
 /* glass recipe'lari components layer'ida: Tailwind utility klasslari ularni ustidan yoza oladi */
 @import "./glass.css" layer(components);
+@import "./motion.css";
 
 /* glass.css tokenlarini Tailwind klasslariga ulash (qiymatlar faqat glass.css'da turadi) */
 @theme inline {

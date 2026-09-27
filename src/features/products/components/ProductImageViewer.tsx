@@ -1,15 +1,16 @@
-import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { LuChevronLeft, LuChevronRight, LuX } from 'react-icons/lu'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import type { ProductPhoto } from '@/api/routes/products/products.types'
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
-import { fadeIn } from '@/lib/motion'
+import { usePresence } from '@/hooks/usePresence'
 import { CusButton } from '@/shared/ui/CusButton'
 import { useSwipe } from '../hooks/useSwipe'
 
 // Kutubxona standart holatda o'lchamni kontentga moslaydi, bizga butun maydon kerak
 const FILL = { width: '100%', height: '100%' }
+// motion.css'dagi fade-out davomiyligi
+const EXIT_MS = 200
 
 type ProductImageViewerProps = {
   photos: ProductPhoto[]
@@ -21,26 +22,23 @@ type ProductImageViewerProps = {
 
 // To'liq ekranli ko'rish: kattalashtirib, surib har bir detalni ko'rish uchun
 export function ProductImageViewer({ photos, name, openIndex, onClose }: ProductImageViewerProps) {
-  useLockBodyScroll(openIndex !== null)
+  const isOpen = openIndex !== null
+  const { isMounted, state } = usePresence(isOpen, EXIT_MS)
+  useLockBodyScroll(isOpen)
+
+  if (!isMounted) return null
 
   return (
-    <AnimatePresence>
-      {openIndex !== null && (
-        <motion.div
-          key="image-viewer"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${name} rasmlari`}
-          variants={fadeIn}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          className="fixed inset-0 z-60 flex flex-col bg-black text-white"
-        >
-          <ViewerContent photos={photos} name={name} startIndex={openIndex} onClose={onClose} />
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${name} rasmlari`}
+      data-state={state}
+      className="fixed inset-0 z-60 flex animate-fade-in flex-col bg-black text-white data-[state=closed]:pointer-events-none data-[state=closed]:animate-fade-out"
+    >
+      {/* Yopilayotganda openIndex null bo'ladi, lekin ViewerContent startIndex'ni faqat mount paytida o'qiydi */}
+      <ViewerContent photos={photos} name={name} startIndex={openIndex ?? 0} onClose={onClose} />
+    </div>
   )
 }
 

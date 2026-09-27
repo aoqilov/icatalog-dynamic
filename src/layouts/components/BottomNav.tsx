@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { NavLink } from 'react-router'
 import { NAV_LINKS } from '@/config/navigation'
 
@@ -24,14 +23,12 @@ export function BottomNav() {
               {({ isActive }) => (
                 <>
                   <Icon aria-hidden className="size-6.5" strokeWidth={isActive ? 2.3 : 1.6} />
-                  <span className="flex h-1 items-center">
-                    {isActive && (
-                      <motion.span
-                        layoutId="bottom-nav-dot"
-                        className="size-1 rounded-full bg-brand"
-                      />
-                    )}
-                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`size-1 rounded-full bg-brand transition-[opacity,scale] duration-200 ease-out ${
+                      isActive ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
+                    }`}
+                  />
                   <span className="max-w-full truncate px-1">{label}</span>
                 </>
               )}

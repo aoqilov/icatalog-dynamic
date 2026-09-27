@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from 'framer-motion'
 import { useId, useState } from 'react'
 import type { ReactNode } from 'react'
 import { LuChevronDown } from 'react-icons/lu'
@@ -56,23 +55,20 @@ export function CusAccordion({ items, defaultOpenId }: CusAccordionProps) {
               </button>
             </h3>
 
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  key="panel"
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={buttonId}
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.2, ease: 'easeOut' }}
-                  className="overflow-hidden"
-                >
-                  <div className="px-3 pb-4 pl-15">{item.content}</div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* grid-rows 0fr → 1fr: balandlik 'auto'gacha silliq ochiladi. Yopiq panel inert: fokus va screen reader'dan yashirin */}
+            <div
+              id={panelId}
+              role="region"
+              aria-labelledby={buttonId}
+              inert={!isOpen}
+              className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${
+                isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+              }`}
+            >
+              <div className="overflow-hidden">
+                <div className="px-3 pb-4 pl-15">{item.content}</div>
+              </div>
+            </div>
           </li>
         )
       })}

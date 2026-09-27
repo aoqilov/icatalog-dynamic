@@ -1,5 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { LuGrid2X2, LuGrid3X3, LuSearch, LuShapes, LuSlidersHorizontal, LuSquare } from 'react-icons/lu'
 import { CusButton } from '@/shared/ui/CusButton'
 import { CusRightSheet } from '@/shared/ui/CusRightSheet'
@@ -32,6 +31,12 @@ export function CatalogToolbar({
 }: CatalogToolbarProps) {
   const [isSearchOpen, setSearchOpen] = useState(false)
   const [isFilterOpen, setFilterOpen] = useState(false)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+
+  // Qidiruv maydoni doim DOM'da turadi, shuning uchun autoFocus o'rniga ochilganda fokus beriladi
+  useEffect(() => {
+    if (isSearchOpen) searchInputRef.current?.focus()
+  }, [isSearchOpen])
 
   return (
     <div className="glass-bar sticky top-0 z-30 md:top-[65px]">
@@ -83,30 +88,27 @@ export function CatalogToolbar({
         </div>
       </div>
 
-      <AnimatePresence initial={false}>
-        {isSearchOpen && (
-          <motion.div
-            key="search"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="overflow-hidden"
-          >
-            <div className="mx-auto flex max-w-2xl items-center gap-2 px-4 pb-3">
-              <div className="flex h-11 flex-1 items-center gap-2 rounded-md border border-line bg-tile px-3">
-                <LuSearch aria-hidden className="size-4.5 shrink-0 text-muted" />
-                <input
-                  type="search"
-                  autoFocus
-                  placeholder="Libos, fata, o'lcham, rang..."
-                  className="min-w-0 flex-1 bg-transparent text-[15px] text-text placeholder:text-muted focus:outline-none"
-                />
-              </div>
+      {/* grid-rows 0fr → 1fr: balandlik 'auto'gacha silliq ochiladi. Yopiqligida inert: Tab bilan fokus tushmasin */}
+      <div
+        inert={!isSearchOpen}
+        className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${
+          isSearchOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="mx-auto flex max-w-2xl items-center gap-2 px-4 pb-3">
+            <div className="flex h-11 flex-1 items-center gap-2 rounded-md border border-line bg-tile px-3">
+              <LuSearch aria-hidden className="size-4.5 shrink-0 text-muted" />
+              <input
+                ref={searchInputRef}
+                type="search"
+                placeholder="Libos, fata, o'lcham, rang..."
+                className="min-w-0 flex-1 bg-transparent text-[15px] text-text placeholder:text-muted focus:outline-none"
+              />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      </div>
 
       <div className="gline" />
 
