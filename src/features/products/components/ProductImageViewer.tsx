@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { LuChevronLeft, LuChevronRight, LuX } from 'react-icons/lu'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
+import type { ReactZoomPanPinchRef } from 'react-zoom-pan-pinch'
 import type { ProductPhoto } from '@/api/routes/products/products.types'
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
 import { usePresence } from '@/hooks/usePresence'
@@ -11,6 +12,11 @@ import { useSwipe } from '../hooks/useSwipe'
 const FILL = { width: '100%', height: '100%' }
 // motion.css'dagi fade-out davomiyligi
 const EXIT_MS = 200
+// Ikki marta tegilganda kattalashish darajasi va animatsiyasi
+const DOUBLE_TAP_SCALE = 2.5
+const ZOOM_ANIMATION_MS = 200
+// Shundan katta bo'lsa rasm kattalashtirilgan hisoblanadi (pinch'dan keyingi yaxlitlash xatosi uchun zaxira)
+const ZOOMED_SCALE = 1.01
 
 type ProductImageViewerProps = {
   photos: ProductPhoto[]
@@ -53,6 +59,7 @@ type ViewerContentProps = {
 function ViewerContent({ photos, name, startIndex, onClose }: ViewerContentProps) {
   const [index, setIndex] = useState(startIndex)
   const [isZoomed, setZoomed] = useState(false)
+  const zoomRef = useRef<ReactZoomPanPinchRef>(null)
   const last = photos.length - 1
 
   const swipe = useSwipe({
@@ -60,7 +67,29 @@ function ViewerContent({ photos, name, startIndex, onClose }: ViewerContentProps
     onLeft: () => go(index + 1),
     onRight: () => go(index - 1),
     onDown: onClose,
+    onDoubleTap: toggleZoom,
   })
+
+  // Ikki marta tegish: kattalashtirilgan bo'lsa (qanchalik bo'lishidan qat'i nazar) asl holiga,
+  // aks holda tegilgan nuqta joyida qolib DOUBLE_TAP_SCALE'gacha kattalashadi
+  function toggleZoom(clientX: number, clientY: number) {
+    const zoom = zoomRef.current
+    const wrapper = zoom?.instance.wrapperComponent
+    if (!zoom || !wrapper) return
+
+    const { scale, positionX, positionY } = zoom.instance.state
+    if (scale > ZOOMED_SCALE) {
+      zoom.resetTransform(ZOOM_ANIMATION_MS)
+      return
+    }
+
+    const rect = wrapper.getBoundingClientRect()
+    const x = clientX - rect.left
+    const y = clientY - rect.top
+    const contentX = (x - positionX) / scale
+    const contentY = (y - positionY) / scale
+    zoom.setTransform(x - contentX * DOUBLE_TAP_SCALE, y - contentY * DOUBLE_TAP_SCALE, DOUBLE_TAP_SCALE, ZOOM_ANIMATION_MS)
+  }
 
   // Rasm almashganda TransformWrapper key orqali qayta mount bo'ladi — kattalashtirish o'zi tushadi
   function go(next: number) {
@@ -98,18 +127,20 @@ function ViewerContent({ photos, name, startIndex, onClose }: ViewerContentProps
       </div>
 
       <div className="relative min-h-0 flex-1">
-        {/* Kattalashtirish, surish, ikki marta bosish, g'ildirak — react-zoom-pan-pinch; chapga/o'ngga/pastga surish — useSwipe */}
+        {/* Pinch, surish, g'ildirak — react-zoom-pan-pinch; chapga/o'ngga/pastga surish va ikki marta tegish — useSwipe.
+            Kutubxonaning o'z double-click'i o'chiq: u kichraytirishni qadam bilan qiladi va teginish oynasi 200ms */}
         <div
           {...swipe}
           className={`size-full touch-none select-none ${isZoomed ? 'cursor-grab' : 'cursor-zoom-in'}`}
         >
           <TransformWrapper
             key={photo.id}
+            ref={zoomRef}
             minScale={1}
             maxScale={4}
             centerOnInit
-            doubleClick={{ mode: 'toggle', step: 1.5 }}
-            onTransform={(_, state) => setZoomed(state.scale > 1.01)}
+            doubleClick={{ disabled: true }}
+            onTransform={(_, state) => setZoomed(state.scale > ZOOMED_SCALE)}
           >
             <TransformComponent wrapperStyle={FILL} contentStyle={FILL}>
               <img
