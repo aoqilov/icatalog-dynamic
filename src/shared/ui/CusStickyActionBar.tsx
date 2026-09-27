@@ -7,28 +7,30 @@ type CusStickyActionBarProps = {
 
 // BottomNav ko'rinsa uning ustida (--bottom-nav-h, MainLayout'dan), aks holda ekran pastida turadi.
 // Safe area'ni BottomNav egallamasa, panel o'zi pastdan shuncha joy qoldiradi.
-// Panel fixed bo'lgani uchun joyida uning balandligicha bo'sh blok qoladi: sahifa oxiri panel ostida qolmaydi.
+// Balandligi o'lchanib :root'dagi --action-bar-h'ga yoziladi: joyidagi bo'sh blok (sahifa oxiri panel ostida
+// qolmasligi uchun) va panelgacha cho'ziladigan bloklar (katalog tasmasi) shundan foydalanadi.
 // Ichidagi ikkinchi darajali tugma glass emas (blur ichida blur bo'lmaydi)
 export function CusStickyActionBar({ children }: CusStickyActionBarProps) {
   const barRef = useRef<HTMLDivElement>(null)
-  const spacerRef = useRef<HTMLDivElement>(null)
 
-  // Balandlik kontentga (tugmalar, safe area) bog'liq, shuning uchun o'lchab olinadi
   useLayoutEffect(() => {
     const bar = barRef.current
-    const spacer = spacerRef.current
-    if (!bar || !spacer) return
+    if (!bar) return
 
+    const root = document.documentElement
     const observer = new ResizeObserver(() => {
-      spacer.style.height = `${bar.offsetHeight}px`
+      root.style.setProperty('--action-bar-h', `${bar.offsetHeight}px`)
     })
     observer.observe(bar, { box: 'border-box' })
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      root.style.removeProperty('--action-bar-h')
+    }
   }, [])
 
   return (
     <>
-      <div ref={spacerRef} aria-hidden="true" />
+      <div aria-hidden="true" className="h-(--action-bar-h)" />
       <div
         ref={barRef}
         className="glass-bar fixed inset-x-0 bottom-(--bottom-nav-h) z-30 pb-[max(0px,calc(env(safe-area-inset-bottom)-var(--bottom-nav-h)))]"

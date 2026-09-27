@@ -22,7 +22,8 @@ export function FeatureCatalog() {
         onColumnsChange={setColumns}
       />
 
-      <div className="mx-auto max-w-2xl px-4 pt-4 pb-6">
+      {/* Picker'da pastki padding yo'q: tasma harakatlar paneligacha cho'ziladi, ortiqcha scroll chiqmasin */}
+      <div className={`mx-auto max-w-2xl px-4 pt-4 ${isPicker ? '' : 'pb-6'}`}>
         {isPicker ? (
           <>
             {categories.isPending && <PickerSkeleton />}

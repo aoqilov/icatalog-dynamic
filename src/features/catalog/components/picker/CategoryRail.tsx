@@ -67,8 +67,9 @@ export function CategoryRail({ categories, activeId, selection, onSelect, onShow
       aria-label="Kategoriyalar"
       className="sticky top-[73px] w-16 shrink-0 self-start md:top-[138px]"
     >
-      {/* -ml-4 pl-4: overflow-y-auto chetni ham kesadi, faol belgisi sahifa padding'ida ko'rinishi uchun */}
-      <ul className="-ml-4 flex max-h-[calc(100dvh-73px-9.5rem)] flex-col gap-2 overflow-y-auto pb-2 pl-4">
+      {/* Balandlik: sticky top'dan harakatlar paneli va BottomNav'gacha, ya'ni doim panelga tegib turadi.
+          -ml-4 pl-4: overflow-y-auto chetni ham kesadi, faol belgisi sahifa padding'ida ko'rinishi uchun */}
+      <ul className="-ml-4 flex h-[calc(100dvh-73px-var(--action-bar-h,0px)-var(--bottom-nav-h))] flex-col gap-2 overflow-y-auto pb-2 pl-4 md:h-[calc(100dvh-138px-var(--action-bar-h,0px)-var(--bottom-nav-h))]">
         <li>
           <RailItem label="Hammasi" badge={totalSelected} onClick={onShowAll}>
             <LuLayoutGrid aria-hidden className="size-5 text-muted" />
