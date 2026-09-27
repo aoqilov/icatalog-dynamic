@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { LuArrowLeft } from 'react-icons/lu'
 import type { Category } from '@/api/routes/categories/categories.types'
 import { CusButton } from '@/shared/ui/CusButton'
@@ -23,6 +24,14 @@ export function SubcategoryMode({
 }: SubcategoryModeProps) {
   const categoryState = selection.categoryState(activeCategory)
 
+  // fade-swap faqat shu rejim ichida kategoriya almashganda: B rejimga kirishda slide-switch yetarli
+  const [prevCategoryId, setPrevCategoryId] = useState(activeCategory.id)
+  const [hasSwapped, setHasSwapped] = useState(false)
+  if (activeCategory.id !== prevCategoryId) {
+    setPrevCategoryId(activeCategory.id)
+    setHasSwapped(true)
+  }
+
   return (
     <div className="flex gap-3">
       <CategoryRail
@@ -37,7 +46,7 @@ export function SubcategoryMode({
       <section
         key={activeCategory.id}
         aria-labelledby="picker-subcategories"
-        className="flex min-w-0 flex-1 animate-fade-swap flex-col gap-3"
+        className={`flex min-w-0 flex-1 flex-col gap-3 ${hasSwapped ? 'animate-fade-swap' : ''}`}
       >
         <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-1">

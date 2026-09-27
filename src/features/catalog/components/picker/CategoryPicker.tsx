@@ -22,6 +22,8 @@ export function CategoryPicker({ categories, initialSelection, onApply }: Catego
   const [mode, setMode] = useState<PickerMode>({ type: 'categories' })
   // 1: A → B (ichkariga, o'ngdan kiradi), -1: B → A (orqaga, chapdan)
   const [direction, setDirection] = useState(1)
+  // Sahifaga kirilganda animatsiya yo'q, faqat rejim almashganda
+  const [hasSwitched, setHasSwitched] = useState(false)
   const count = useGetProductsCount(selection.draft)
 
   const totalCount = categories.reduce((sum, category) => sum + category.productCount, 0)
@@ -29,7 +31,10 @@ export function CategoryPicker({ categories, initialSelection, onApply }: Catego
     mode.type === 'subcategories' ? categories.find((item) => item.id === mode.categoryId) : undefined
 
   const changeMode = (next: PickerMode) => {
-    if (next.type !== mode.type) setDirection(next.type === 'subcategories' ? 1 : -1)
+    if (next.type !== mode.type) {
+      setDirection(next.type === 'subcategories' ? 1 : -1)
+      setHasSwitched(true)
+    }
     setMode(next)
     appScrollElement().scrollTo({ top: 0 })
   }
@@ -42,7 +47,9 @@ export function CategoryPicker({ categories, initialSelection, onApply }: Catego
         {/* key o'zgarganda qayta mount bo'ladi va slide-switch kirish animatsiyasi o'ynaydi */}
         <div
           key={activeCategory ? 'subcategories' : 'categories'}
-          className={`animate-slide-switch ${direction === 1 ? '[--switch-dir:1]' : '[--switch-dir:-1]'}`}
+          className={
+            hasSwitched ? `animate-slide-switch ${direction === 1 ? '[--switch-dir:1]' : '[--switch-dir:-1]'}` : ''
+          }
         >
           {activeCategory ? (
             <SubcategoryMode

@@ -155,7 +155,7 @@ src/
 - Animatsiya kutubxonasi yo'q, hammasi CSS bilan. Keyframe'lar `style/motion.css`dagi `@theme`da turadi va `animate-<nom>` klasslari sifatida ishlatiladi: `fade-in` / `fade-out`, `slide-in-up` / `slide-out-down`, `slide-in-right` / `slide-out-right`, `slide-switch`, `fade-swap`.
 - Ochilib-yopiladigan oyna (sheet, viewer) `hooks/usePresence(isOpen, exitMs)` bilan: u yopilgandan keyin `exitMs` davomida elementni `data-state="closed"` bilan DOM'da ushlab turadi, chiqish animatsiyasi `data-[state=closed]:animate-*` (ichki elementlarga `group-data-[state=closed]:`) bilan beriladi. `exitMs` `motion.css`dagi chiqish davomiyligiga teng bo'ladi.
 - Balandligi `auto` bo'lgan blokni ochish-yopish (accordion, qidiruv paneli): `grid` + `grid-rows-[0fr]` ↔ `grid-rows-[1fr]` transition, ichida `overflow-hidden` o'rovchi. Yopiq blokka `inert` qo'yiladi.
-- Ichkariga kirish / orqaga qaytish uchun `animate-slide-switch` (`[--switch-dir:1]` yoki `[--switch-dir:-1]`), bir joyda kontent almashishi uchun `animate-fade-swap` ishlatiladi. Ikkalasi faqat kirish animatsiyasi: element `key` o'zgarganda qayta mount bo'lib o'ynaydi.
+- Ichkariga kirish / orqaga qaytish uchun `animate-slide-switch` (`[--switch-dir:1]` yoki `[--switch-dir:-1]`), bir joyda kontent almashishi uchun `animate-fade-swap` ishlatiladi. Ikkalasi faqat kirish animatsiyasi: element `key` o'zgarganda qayta mount bo'lib o'ynaydi. Sahifaga birinchi kirishda o'ynamasligi uchun klass faqat birinchi almashishdan keyin qo'yiladi (`hasSwitched` / `hasSwapped` state).
 - `motion.css`dagi `prefers-reduced-motion` qoidasi barcha animatsiya va transition'larni o'chiradi, har bir komponentda alohida tekshirish shart emas.
 
 ### Kod uslubi
